@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "ScreepsDotNet": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:51237;http://localhost:51238"
+    }
+  }
+}
