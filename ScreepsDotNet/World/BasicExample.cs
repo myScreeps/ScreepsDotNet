@@ -336,12 +336,22 @@ namespace ScreepsDotNet.World
         public void Tick()
         {
 
+
+
             // roomMemory = game.Memory.GetOrCreateObject(this.room.Name);
 
             Console.WriteLine(" ");
             Console.WriteLine("******************** !Start of Tick Test World! ********************");
 
-            
+            bool disableEverything;
+            var status = Spawn1.Memory.TryGetBool("disableEverything", out disableEverything);
+
+            if (!status || disableEverything == true)
+            {
+                return;
+            }
+
+
             // Spawn1.Memory.SetValue("foo2", 12);
             //int spawnMemoryFoo2 = 0;
             //var status = Spawn1.Memory.TryGetInt("foo2", out maxTotalCreeps); 
@@ -373,41 +383,6 @@ namespace ScreepsDotNet.World
             ////  myFooTest.SetValue("fooTest2", "test2");
 
 
-
-            //var footest = 0;
-            //var getMemStatus = gameMemory.TryGetInt("footest",out footest);
-            //Console.WriteLine($"footest: {footest}");
-
-
-            // var getMemStatus = gameMemory.TryGetInt("numberOfMiners1",out targetMiner1Count);
-            // getMemStatus = gameMemory.TryGetInt("numberOfMiners2", out targetMiner2Count);
-
-            //  var spawnMemory = Spawn1.Memory;
-
-            //  game.Memory.TryGetObject("foox", out var foox);
-            //  Console.WriteLine($"foox {foox}");
-
-
-
-            //   spawnMemory.SetValue("foo2", 1);
-
-            //Spawn1.Memory.TryGetInt("foo2", out foo2);
-
-            //Console.WriteLine($"foo2: {foo2}");
-            //foo2++;
-            //Spawn1.Memory.SetValue("foo2", foo2);
-
-
-
-            if (room.Name == "W27S55")
-            {
-                targetMiner1Count = 4;
-                targetMiner2Count = 2;
-                // targetUpgraderCount = 7;
-                targetTankerCount = 1;
-                //  targetRepairCount = 2;
-                maxTotalCreeps = 9;
-            }
 
 
             var allStructures = room.Find<IStructure>();
@@ -492,6 +467,112 @@ namespace ScreepsDotNet.World
             invaderCreeps = allCreeps.Where(x => !x.My).ToHashSet();
             var newCreepList = allCreeps.Where(x => x.My); //.OrderByDescending(x => x.TicksToLive).ToList();
 
+
+            foreach (var creep in newCreepList)
+            {
+                TTLCountDown(creep, 100);
+                if (!allCreepsInRoom.Add(creep)) { continue; }
+                OnAssignRole(creep);
+            }
+
+
+            // Tick all tracked creeps
+            var minerCount = 0;
+
+            foreach (var creep in minerCreepsSource1)
+            {
+                // creep.Say("m");
+                //  if (creep.Exists && minerCount < 4)
+                // {
+                TickMiner(creep);
+                minerCount++;
+                //}
+
+                //else
+                //{
+                //    TickMinerSource2(creep);
+
+                //    //Console.WriteLine($"{this}: {creep} assigned is a dead miner");
+
+                //}
+            }
+            foreach (var creep in minerCreepsSource2)
+            {
+                TickMinerSource2(creep);
+            }
+            foreach (var creep in builderCreeps)
+            {
+                if (creep.Exists)
+                {
+                    TickBuilder(creep);
+                }
+                else
+                {
+                    //  Console.WriteLine($"{this}: {creep} assigned is a dead upgrader");
+
+                }
+            }
+            foreach (var creep in workerCreeps)
+            {
+
+                if (creep.Exists)
+                {
+                    TickWorker(creep);
+                }
+                else
+                {
+                    //  Console.WriteLine($"{this}: {creep} assigned is a dead upgrader");
+
+                }
+            }
+            foreach (var creep in tankerCreeps)
+            {
+                if (creep.Exists == false)
+                {
+                    continue;
+                }
+
+                if (extensionTargets.Count > 0 || towerTargets.Count > 0)
+                {
+                    TickTankers(creep);
+                    continue;
+                }
+
+                if (creep.Exists)
+                {
+                    //  Console.WriteLine($"{this}: {creep} tanker switching to upgrader");
+
+                    TickWorker(creep);
+                }
+                else
+                {
+                    //   Console.WriteLine($"{this}: {creep} Tanker creeps are doing nothing");
+
+                }
+            }
+            foreach (var creep in repairCreeps)
+            {
+                if (creep.Exists == false)
+                {
+                    continue;
+                }
+
+                if (extensionTargets.Count > 0)
+                {
+                    TickBuilder(creep);
+                    continue;
+                }
+
+                if (creep.Exists)
+                {
+                    TickRepairer(creep);
+                }
+                else
+                {
+                    Console.WriteLine($"{this}: {creep} assigned is a dead repairer");
+
+                }
+            }
 
 
 
@@ -634,12 +715,6 @@ namespace ScreepsDotNet.World
    
             DisplayStats();
 
-            foreach (var creep in newCreepList)
-            {
-                TTLCountDown(creep, 100);
-                if (!allCreepsInRoom.Add(creep)) { continue; }
-                OnAssignRole(creep);
-            }
 
             // Tick all spawns
             foreach (var spawn in spawns)
@@ -648,106 +723,9 @@ namespace ScreepsDotNet.World
                 TickSpawn(spawn);
             }
 
-            // Tick all tracked creeps
-            var minerCount = 0;
 
 
 
-
-            foreach (var creep in minerCreepsSource1)
-            {
-                // creep.Say("m");
-                //  if (creep.Exists && minerCount < 4)
-                // {
-                TickMiner(creep);
-                minerCount++;
-                //}
-
-                //else
-                //{
-                //    TickMinerSource2(creep);
-
-                //    //Console.WriteLine($"{this}: {creep} assigned is a dead miner");
-
-                //}
-            }
-            foreach (var creep in minerCreepsSource2)
-            {
-                TickMinerSource2(creep);
-            }
-            foreach (var creep in builderCreeps)
-            {
-                if (creep.Exists)
-                {
-                    TickBuilder(creep);
-                }
-                else
-                {
-                    //  Console.WriteLine($"{this}: {creep} assigned is a dead upgrader");
-
-                }
-            }
-            foreach (var creep in workerCreeps)
-            {
-
-                if (creep.Exists)
-                {
-                    TickWorker(creep);
-                }
-                else
-                {
-                    //  Console.WriteLine($"{this}: {creep} assigned is a dead upgrader");
-
-                }
-            }
-            foreach (var creep in tankerCreeps)
-            {
-                if (creep.Exists == false)
-                {
-                    continue;
-                }
-
-                if (extensionTargets.Count > 0 || towerTargets.Count > 0)
-                {
-                    TickTankers(creep);
-                    continue;
-                }
-
-                if (creep.Exists)
-                {
-                    //  Console.WriteLine($"{this}: {creep} tanker switching to upgrader");
-
-                    TickWorker(creep);
-                }
-                else
-                {
-                    //   Console.WriteLine($"{this}: {creep} Tanker creeps are doing nothing");
-
-                }
-            }
-            foreach (var creep in repairCreeps)
-            {
-                if (creep.Exists == false)
-                {
-                    continue;
-                }
-
-                if (extensionTargets.Count > 0)
-                {
-                    TickBuilder(creep);
-                    continue;
-                }
-
-                if (creep.Exists)
-                {
-                    TickRepairer(creep);
-                }
-                else
-                {
-                    Console.WriteLine($"{this}: {creep} assigned is a dead repairer");
-
-                }
-            }
 
             //Console.WriteLine($"------- towersInRoom.Count: {towersInRoom.Count}");
 
@@ -839,7 +817,7 @@ namespace ScreepsDotNet.World
             status = creep.Memory.TryGetString("Spawn", out spawnName);
             status = creep.Memory.TryGetInt("respawnTick", out respawnTick);
 
-            if (role!= null || role != string.Empty || role !="" && role.Length >=1)
+            if (role != null || role != string.Empty || role != "" && role.Length >= 1)
             {
                 //Console.WriteLine($" !!!!!!!!! role.length: {role.Length} role: {role}");
                 //Console.WriteLine($" !!!!!!!!! role.length: {role.Length} role: {role}");
@@ -886,7 +864,17 @@ namespace ScreepsDotNet.World
 
                         case "miner2":
                             Console.WriteLine($"role: {role}");
-                            creep.Memory.SetValue("Spawn", "Spawn2");
+
+                            if (spawns.Count > 1)
+                            {
+                                creep.Memory.SetValue("Spawn", "Spawn2");
+
+                            }
+                            else
+                            {
+                                creep.Memory.SetValue("Spawn", "Spawn1");
+
+                            }
                             creep.Memory.SetValue("role", "miner2");
                             creep.Memory.SetValue("respawnTick", this.respawnTick);
                             minerCreepsSource2.Add(creep);
@@ -935,22 +923,25 @@ namespace ScreepsDotNet.World
                             break;
 
                         default:
-                            Console.WriteLine($"role: {role}");
-                            creep.Memory.SetValue("Spawn", "Spawn1");
-                            creep.Memory.SetValue("role", "worker");
-                            creep.Memory.SetValue("respawnTick", this.respawnTick);
-                            workerCreeps.Add(creep);
+
+                            assignNewRole(creep);
+
+                            //Console.WriteLine($"role: {role}");
+                            //creep.Memory.SetValue("Spawn", "Spawn1");
+                            //creep.Memory.SetValue("role", "worker");
+                            //creep.Memory.SetValue("respawnTick", this.respawnTick);
+                            //workerCreeps.Add(creep);
                             break;
                     }
                     return;
                 }
             }
 
+            
 
-
-
-
-            if (room.Storage != null)
+            void assignNewRole(ICreep creep)
+            {
+                if (room.Storage.Exists)
                 {
                     if (minerCreepsSource1.Count >= 2)
                     {
@@ -982,7 +973,17 @@ namespace ScreepsDotNet.World
                 if (minerCreepsSource2.Count < this.targetMiner2Count)
                 {
                     Console.WriteLine($"{this}: {creep} assigned as miner2");
-                    creep.Memory.SetValue("Spawn", "Spawn2");
+                    if (Spawn2.Exists)
+                    {
+                        creep.Memory.SetValue("Spawn", "Spawn2");
+                    }
+                    else
+                    {
+                        creep.Memory.SetValue("Spawn", "Spawn1");
+
+                    }
+
+
                     creep.Memory.SetValue("role", "miner2");
                     creep.Memory.SetValue("respawnTick", this.respawnTick);
 
@@ -1012,7 +1013,7 @@ namespace ScreepsDotNet.World
                     return;
                 }
 
-            if (repairCreeps.Count < this.targetRepairerCount)
+                if (repairCreeps.Count < this.targetRepairerCount)
                 {
                     Console.WriteLine($"{this}: {creep} assigned as repairer");
 
@@ -1035,11 +1036,12 @@ namespace ScreepsDotNet.World
 
                 workerCreeps.Add(creep);
                 return;
-                //}
+             
             }
+        }
 
-          //  Console.WriteLine($"{this}: {creep} unknown role");
-        
+        //  Console.WriteLine($"{this}: {creep} unknown role");
+
 
         private void OnCreepDied(ICreep creep)
         {
@@ -1122,8 +1124,8 @@ namespace ScreepsDotNet.World
 
 
 
-            Console.WriteLine($"Spawn1 name is {Spawn1.Name}");
-            Console.WriteLine($"Spawn2 name is {Spawn2.Name}");
+           // Console.WriteLine($"Spawn1 name is {Spawn1.Name}");
+         //   Console.WriteLine($"Spawn2 name is {Spawn2.Name}");
 
             Console.WriteLine($"Active Spawn is {spawn.Name}");
 
@@ -1196,6 +1198,7 @@ namespace ScreepsDotNet.World
                         //  var gameMemoryObject = game.CreateMemoryObject();
                         if (creepOptions != null)
                         {
+
                             creepOptions.SetValue("role", creepdata.role);
                             creepOptions.SetValue("spawn", creepdata.spawnName);
                             creepOptions.SetValue("respawnTick", creepdata.respawnTick);
@@ -1691,7 +1694,6 @@ namespace ScreepsDotNet.World
 
         }
 
-
         private ISource? GetSourceAtFlag(IFlag flag, ISet<ISource> allSourcesInRoom)
         {
             //  source2LinkFlag = room.Find<IFlag>().Where(x => x.Name == $"Source1_Link_{room.Name}");
@@ -1756,12 +1758,23 @@ namespace ScreepsDotNet.World
 
         private void PickupEnergy(ICreep creep)
         {
+            
+
+            if (!creep.Exists)
+            {
+                return;
+            }
 
 
-            //if (!creep.Exists)
-            //{
-            //    return;
-            //}
+            bool disablePickupEnergy;
+            var status = Spawn1.Memory.TryGetBool("disablePickupEnergy", out disablePickupEnergy);
+
+            if (!status || disablePickupEnergy == true)
+            {
+                return;
+            }
+
+
 
             if (creep.Store.GetFreeCapacity(ResourceType.Energy) > 0)
             {
@@ -1885,10 +1898,10 @@ namespace ScreepsDotNet.World
 
         private void TickWorker(ICreep creep)
         {
-            //if (!creep.Exists)
-            //{
-            //    return;
-            //}
+            if (!creep.Exists)
+            {
+                return;
+            }
 
             PickupEnergy(creep);
 
@@ -2241,7 +2254,10 @@ namespace ScreepsDotNet.World
 
         private void FillTowers(ICreep creep)
         {
-
+            if (!creep.Exists)
+            {
+                return;
+            }
 
             // Check energy storage
             if (creep.Store[ResourceType.Energy] > 0)
@@ -2291,7 +2307,10 @@ namespace ScreepsDotNet.World
 
         private void FillExtentions(ICreep creep)
         {
-
+            if (!creep.Exists)
+            {
+                return;
+            }
 
             // Check energy storage
             if (creep.Store[ResourceType.Energy] > 0)
