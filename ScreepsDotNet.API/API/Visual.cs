@@ -286,7 +286,7 @@ namespace ScreepsDotNet.API
         public readonly double StrokeWidth;
 
         public TextVisualStyle(
-            TextAlign align = TextAlign.Center,
+            TextAlign align = TextAlign.Left,
             Color? backgroundColor = null,
             double backgroundPadding = 0.3,
             Color? color = null,
@@ -299,7 +299,8 @@ namespace ScreepsDotNet.API
             Align = align;
             BackgroundColor = backgroundColor;
             BackgroundPadding = backgroundPadding;
-            Color = color ?? Color.White;
+          //  Color = color ?? Color.Green;
+            Color = Color.Green;
             Font = font;
             Opacity = opacity;
             Stroke = stroke;

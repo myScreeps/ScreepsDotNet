@@ -1,0 +1,56 @@
+
+[11:15:47 PM][shard3]DOTNET   
+[11:15:47 PM][shard3]DOTNET  ******************** !Start of Tick Test World! ********************
+[11:15:47 PM][shard3]DOTNET  targetMiner1Count: 4
+[11:15:47 PM][shard3]DOTNET  targetMiner2Count: 2
+[11:15:47 PM][shard3]DOTNET  targetTankerCount: 2
+[11:15:47 PM][shard3]DOTNET  respawnTick: 20
+[11:15:47 PM][shard3]DOTNET  maxTotalCreeps: 16
+[11:15:47 PM][shard3]DOTNET   *** source2LinkFlags.Count is 0
+[11:15:47 PM][shard3]DOTNET   *** source2LinkFlags.Count is 0
+[11:15:47 PM][shard3]   at ScreepsDotNet.World.RoomManager.TickLinks()
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_234154511(JSMarshalerArgument* __arguments_buffer)
+Error: Object reference not set to an instance of an object.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:9:3)
+    at dotNet.loop (main:343:65)
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.exports.evalCode (<runtime>:15851:76)
+
+    [12:43:11 AM][shard3]DOTNET  targetMiner1Count: 4
+[12:43:11 AM][shard3]DOTNET  targetMiner2Count: 2
+[12:43:11 AM][shard3]DOTNET  targetTankerCount: 2
+[12:43:11 AM][shard3]DOTNET  respawnTick: 20
+[12:43:11 AM][shard3]DOTNET  maxTotalCreeps: 16
+[12:43:11 AM][shard3]DOTNET   *** controllerLinkFlags.Count is 0
+[12:43:11 AM][shard3]DOTNET  ***1 controllerLink: 
+[12:43:11 AM][shard3]DOTNET   *** storageLinkFlags.Count is 0
+[12:43:11 AM][shard3]DOTNET  ***1 controllerLink: 
+[12:43:11 AM][shard3]   at ScreepsDotNet.World.RoomManager.TickLinks()
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_2038660837(JSMarshalerArgument* __arguments_buffer)
+Error: Object reference not set to an instance of an object.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:9:3)
+    at dotNet.loop (main:343:65)
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.exports.evalCode (<runtime>:15851:76)
+
+
+   Source1_Link_W27S55
+
+   3:48:56 AM]DOTNET  ******************** !End of tick! ********************
+[3:48:56 AM]DOTNET  Gen 0 GC happened this loop (now up to 750 collections)
