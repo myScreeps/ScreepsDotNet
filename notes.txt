@@ -1,0 +1,252 @@
+[3:08:43 AM]   at ScreepsDotNet.World.RoomManager.TickSpawn(IStructureSpawn )
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_1735696269(JSMarshalerArgument* __arguments_buffer)
+Error: Object reference not set to an instance of an object.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
+
+5:29:38 AM]DOTNET   
+[5:29:38 AM]DOTNET  role is miner2
+[5:29:38 AM]DOTNET  right before spawning creep
+[5:29:38 AM]   at ScreepsDotNet.World.RoomManager.TickSpawn(IStructureSpawn )
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_23381812(JSMarshalerArgument* __arguments_buffer)
+Error: Object reference not set to an instance of an object.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
+
+
+[3:12:44 PM]DOTNET            room.EnergyAvailable: 12000
+[3:12:44 PM]DOTNET   
+[3:12:44 PM]DOTNET  minerCreepsSource2.Count: 1
+[3:12:44 PM]DOTNET  Active Spawn is Spawn1
+[3:12:44 PM]DOTNET  right before if (spawnQueue.Count > 0)
+[3:12:44 PM]DOTNET  right after if (spawnQueue.Count > 0)
+[3:12:44 PM]DOTNET  var screepData = spawnQueue.Peek();
+[3:12:44 PM]DOTNET  var name = FindUniqueCreepName() is W1N7_1312255425
+[3:12:44 PM]DOTNET  screepData.bodyType is BodyType(5x Move, 2x Carry, 7x Work)
+[3:12:44 PM]DOTNET  role: miner1
+[3:12:44 PM]DOTNET  spawnName: Spawn1
+[3:12:44 PM]DOTNET  role is miner1
+[3:12:44 PM]DOTNET  right before spawning creep
+[3:12:44 PM]DOTNET  1390 creepBodyType: BodyType(5x Move, 2x Carry, 7x Work)
+[3:12:44 PM]DOTNET  1393 spawn.Name: Spawn1
+[3:12:44 PM]DOTNET  1400 creepdata: ScreepsDotNet.World.myCreepData
+[3:12:44 PM]DOTNET  spawning creep started
+[3:12:44 PM]DOTNET  minerCreepsSource2.Count: 1
+[3:12:44 PM]DOTNET  Active Spawn is Spawn1
+[3:12:44 PM]DOTNET  right before if (spawnQueue.Count > 0)
+[3:12:44 PM]DOTNET  minerCreepsSource2.Count: 1
+[3:12:44 PM]DOTNET  Active Spawn is Spawn1
+[3:12:44 PM]DOTNET  right before if (spawnQueue.Count > 0)
+[3:12:44 PM]DOTNET   
+[3:12:44 PM]DOTNET  ******************** !!End of tick!! ********************
+
+
+
+[3:53:40 PM]DOTNET             invaderCreeps.Count: 0
+[3:53:40 PM]DOTNET            repairerCreeps.Count: 0
+[3:53:40 PM]DOTNET              tankerCreeps.Count: 1
+[3:53:40 PM]DOTNET              towerTargets.Count: 0
+[3:53:40 PM]DOTNET              towersInRoom.Count: 6
+[3:53:40 PM]DOTNET             invaderCreeps.Count: 0
+[3:53:40 PM]DOTNET             repairTargets.Count: 1
+[3:53:40 PM]DOTNET            room.EnergyAvailable: 12300
+[3:53:40 PM]DOTNET   
+[3:53:40 PM]DOTNET  minerCreepsSource2.Count: 0
+[3:53:40 PM]DOTNET  Active Spawn is Spawn1
+[3:53:40 PM]DOTNET  right before if (spawnQueue.Count > 0)
+[3:53:40 PM]DOTNET  right after if (spawnQueue.Count > 0)
+[3:53:40 PM]DOTNET  var screepData = spawnQueue.Peek();
+[3:53:40 PM]DOTNET  var name = FindUniqueCreepName() is W1N7_57358345
+[3:53:40 PM]DOTNET  screepData.bodyType is BodyType(1x Move, 1x Carry, 7x Work)
+[3:53:40 PM]DOTNET  role: miner2
+[3:53:40 PM]DOTNET  spawnName: Spawn1
+[3:53:40 PM]DOTNET  role is miner2
+[3:53:40 PM]DOTNET  right before spawning creep
+[3:53:40 PM]DOTNET  1390 creepBodyType: BodyType(1x Move, 1x Carry, 7x Work)
+[3:53:40 PM]   at ScreepsDotNet.World.RoomManager.TickSpawn(IStructureSpawn )
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_2014902071(JSMarshalerArgument* __arguments_buffer)
+Error: Object reference not set to an instance of an object.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
+[3:53:41 PM]DOTNET   
+[3:53:41 PM]DOTNET  ******************** !Start of Tick Test World! ********************
+[3:53:41 PM]DOTNET  targetMiner1Count: 1
+[3:53:41 PM]DOTNET  targetMiner2Count: 1
+[3:53:41 PM]DOTNET  targetTankerCount: 1
+[3:53:41 PM]DOTNET  respawnTick: 20
+[3:53:41 PM]
+
+ minerCreepsSource2.Count: 1
+[4:28:20 PM]DOTNET  Active Spawn is Spawn1
+[4:28:20 PM]DOTNET  right before if (spawnQueue.Count > 0)
+[4:28:20 PM]DOTNET  right after if (spawnQueue.Count > 0)
+[4:28:20 PM]DOTNET  var screepData = spawnQueue.Peek();
+[4:28:20 PM]DOTNET  var name = FindUniqueCreepName() is W1N7_889170359
+[4:28:20 PM]DOTNET  screepData.bodyType is BodyType(1x Move, 1x Carry, 7x Work)
+[4:28:20 PM]DOTNET  role: miner2
+[4:28:20 PM]DOTNET  spawnName: Spawn2
+[4:28:20 PM]DOTNET  role is miner2
+[4:28:20 PM]DOTNET  right before spawning creep
+[4:28:20 PM]   at ScreepsDotNet.World.RoomManager.TickSpawn(IStructureSpawn )
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_1611772835(JSMarshalerArgument* __arguments_buffer)
+Error: Object reference not set to an instance of an object.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
+
+
+
+    [11:46:37 PM]DOTNET  ******************** !Start of Tick Test World! ********************
+[11:46:37 PM]DOTNET  debug: False
+[11:46:37 PM]   at ScreepsDotNet.Native.World.NativeObject.TouchProxyObject(Boolean )
+   at ScreepsDotNet.Native.World.NativeObject.CachePerTick[NativeStore](NativeStore& )
+   at ScreepsDotNet.Native.World.NativeStructureExtension.get_Store()
+   at ScreepsDotNet.World.RoomManager.FillExtentions(ICreep )
+   at ScreepsDotNet.World.RoomManager.TickTankers(ICreep )
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_2114904879(JSMarshalerArgument* __arguments_buffer)
+Error: Exception of type 'ScreepsDotNet.API.World.NativeObjectNoLongerExistsException' was thrown.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
+[11:46:39 PM]DOTNET   
+
+global.getUsed = function() {
+    return Game.cpu.getUsed()
+}
+
+
+
+
+
+
+[3:18:20 PM]DOTNET  DEBUG: displayStats: False
+[3:18:20 PM]DOTNET     Towers that need energy: 1
+[3:18:20 PM]   at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument )
+   at System.Linq.Enumerable.Where[IStructureContainer](IEnumerable`1 , Func`2 )
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_764827445(JSMarshalerArgument* __arguments_buffer)
+Error: Value cannot be null. (Parameter 'source')
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
+    
+Resume tracking
+ 
+[3:26:24 PM]DOTNET  DEBUG:  *** flagName is Source2_Link_W1N7
+[3:26:24 PM]DOTNET  DEBUG:  *** source2LinkFlags.Count is 1
+[3:26:24 PM]DOTNET   *** link is StructureLink[88bcc550827613c]
+[3:26:24 PM]DOTNET  DEBUG: ***1 source2Link: StructureLink[88bcc550827613c]
+[3:26:24 PM]DOTNET   *** controllerLinkFlags.Count is 1
+[3:26:24 PM]DOTNET   *** controllerLinkFlags is System.Linq.Enumerable+WhereEnumerableIterator`1[ScreepsDotNet.API.World.IFlag]
+[3:26:24 PM]DOTNET   *** controllerLinkFlag.RoomPosition.Position: [40,35]
+[3:26:24 PM]DOTNET   *** link is StructureLink[1ff421c19194ad2]
+[3:26:24 PM]DOTNET  DEBUG: ***1 controllerLink: StructureLink[1ff421c19194ad2]
+[3:26:24 PM]DOTNET   *** storageLinkFlags.Count is 1
+[3:26:24 PM]DOTNET   *** storageLinkFlag is NativeFlag[(js-obj js '70')]
+[3:26:24 PM]DOTNET   *** storageLinkFlag.RoomPosition.Position: [33,24]
+[3:26:24 PM]DOTNET   *** link is StructureLink[fdc501274ebf787]
+[3:26:24 PM]DOTNET  DEBUG: ***1 controllerLink: StructureLink[1ff421c19194ad2]
+[3:26:24 PM]DOTNET  Swtich: miner1
+[3:26:24 PM]DOTNET  role: miner1
+[3:26:24 PM]DOTNET  Swtich: tanker
+[3:26:24 PM]DOTNET  role: tanker
+[3:26:24 PM]DOTNET  Swtich: miner2
+[3:26:24 PM]DOTNET  role: miner2
+[3:26:24 PM]DOTNET  Swtich: worker
+[3:26:24 PM]DOTNET  role: worker
+[3:26:24 PM]DOTNET  Swtich: worker
+[3:26:24 PM]DOTNET  role: worker
+[3:26:24 PM]DOTNET  Swtich: worker
+[3:26:24 PM]DOTNET  role: worker
+[3:26:24 PM]DOTNET  Swtich: worker
+[3:26:24 PM]DOTNET  role: worker
+[3:26:24 PM]DOTNET  Swtich: worker
+[3:26:24 PM]DOTNET  role: worker
+[3:26:24 PM]DOTNET  Swtich: worker
+[3:26:24 PM]DOTNET  role: worker
+[3:26:24 PM]DOTNET  DEBUG:    Towers that need energy: 1
+[3:26:24 PM]DOTNET  DEBUG: Adding extensions to extensionTargets
+[3:26:24 PM]   at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument )
+   at System.Linq.Enumerable.Where[IStructureContainer](IEnumerable`1 , Func`2 )
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_764827445(JSMarshalerArgument* __arguments_buffer)
+Error: Value cannot be null. (Parameter 'source')
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
+[3:26:24 PM]DOTNET   
+[3:26:24 PM]DOTNET  ******************** !Start of Tick Test World! ********************
+[3:26:24 PM]DOTNET  DEBUG: targetMiner1Count: 1
+[3:26:24 PM]DOTNET  DEBUG: targetMiner2Count: 1
+[3:26:24 PM]DOTNET  DEBUG: targetTankerCount: 1
+[3:26:24 PM]DOTNET  DEBUG: respawnTick: 20
+[3:26:24 PM]DOTNET  DEBUG: maxTotalCreeps: 9
+[3:26:24 PM]DOTNET  debug: True
+[3:26:24 PM]DOTNET  DEBUG: cat: huckleberry4
+[3:26:24 PM]
+
+

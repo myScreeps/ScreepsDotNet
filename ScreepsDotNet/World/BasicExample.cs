@@ -87,6 +87,7 @@ namespace ScreepsDotNet.World
     {
         private readonly IGame game;
         private readonly IRoom room;
+        private long currentGameTick;
         private readonly IStructureController roomController;
         private IStructureSpawn Spawn1;
         private IStructureSpawn Spawn2;
@@ -105,6 +106,7 @@ namespace ScreepsDotNet.World
         private ISet<IFlag> allRoomFlags = new HashSet<IFlag>();
         private ISet<IStructureContainer> allContainers = new HashSet<IStructureContainer>();
         private ISet<IConstructionSite> allContructionSitesInRoom = new HashSet<IConstructionSite>();
+       // private ISet<IStructureExtension> extensionsInRoom = new HashSet<IStructureExtension>();
         
 
         // that need energy
@@ -183,6 +185,8 @@ namespace ScreepsDotNet.World
 
 
         private Stopwatch stopwatch = new Stopwatch();
+        private long executeTimeUpToCreeps;
+        private long creepsExecuteTime;
         private ScreepsProfiler profiler = new ScreepsProfiler();
         private bool debug = true;
         private bool displayStats = true;
@@ -224,17 +228,10 @@ namespace ScreepsDotNet.World
         public void Init()
         {
             CleanMemory();
+            currentGameTick = game.Time;
             SyncScreepsGameObjects();
-
             roomVisual = game.CreateRoomVisual(this.room.Name);
 
-            //   creepMemory = new M
-
-            //  spawnCreepOptions = new SpawnCreepOptions();
-
-            //   SpawnCreepOptions options = new SpawnCreepOptions(memory: game.CreateMemoryObject());
-
-            //options.Memory.SetValue("fooTester", "FooTester1");
 
             if (this.room.Name == "W27S55")
             {
@@ -346,7 +343,7 @@ namespace ScreepsDotNet.World
                 //roomMemory.SetValue("maxTotalCreeps", 5);
             }
 
-
+            InitLinks();
 
 
 
@@ -389,11 +386,12 @@ namespace ScreepsDotNet.World
 
         public void Tick()
         {
-
+           
             stopwatch.Start();
             Console.WriteLine(" ");
             Console.WriteLine("******************** !Start of Tick Test World! ********************");
 
+            currentGameTick = game.Time;
             myDebug.debug = this.debug;
 
             bool disableEverything;
@@ -412,23 +410,9 @@ namespace ScreepsDotNet.World
 
             var spawn1Mem = Spawn1.Memory;
 
-
-
-
-            //Console.WriteLine($"Spawn1.GetType(): {Spawn1.GetType().ToString()}");
-            //myDebug.WriteLine($"Spawn1.GetType(): {Spawn1.GetType()}");
-            //var container1 = allContainers.First();
-
-            //myDebug.WriteLine($"allRoomStructs.Count: {allRoomStructs.Count}");
-            //var containers = allRoomStructs.Where(x => x.GetType().ToString() == "Native.World.NativeStructureSpawn");
-
-            //myDebug.WriteLine($"containers.Count(): {containers.Count()}");
-
-
-            // myDebug.WriteLine($"container1.GetType(): {container1.GetType()}");
-
-            // this.updateSpawn1Memory();
+           // this.updateSpawn1Memory();
             profiler.Profile("updateSpawn1Memory", () => this.updateSpawn1Memory(), true);
+            Console.WriteLine($"430 allCreepsInRoom.Count: {allCreepsInRoom.Count}");
 
 
 
@@ -482,16 +466,15 @@ namespace ScreepsDotNet.World
             //// roomMemory.SetValue("fooTest1", "test1"); 
             ////  myFooTest.SetValue("fooTest2", "test2");
 
-
             if (game.Time % 10 == 0)
             {
-                //allRoomFlags = room.Find<IFlag>().ToHashSet();
-                //allRoomStructures = room.Find<IStructure>().ToHashSet();
-                //towersInRoom = allRoomStructures.OfType<IStructureTower>().ToHashSet();
-                //allContainers = allRoomStructures.OfType<IStructureContainer>().ToHashSet();
-                //  containersInRoom = allRoomStructures.OfType<IStructureContainer>().ToHashSet();
-                //allContructionSitesInRoom = allRoomStructures.OfType<IConstructionSite>().ToHashSet();
-                //roadsInRoom = allRoomStructures.OfType<IStructureRoad>().ToHashSet();
+                // allRoomFlags = room.Find<IFlag>().ToHashSet();
+                // allRoomStructures = room.Find<IStructure>().ToHashSet();
+                // towersInRoom = allRoomStructures.OfType<IStructureTower>().ToHashSet();
+                // allContainers = allRoomStructures.OfType<IStructureContainer>().ToHashSet();
+                // containersInRoom = allRoomStructures.OfType<IStructureContainer>().ToHashSet();
+                // allContructionSitesInRoom = allRoomStructures.OfType<IConstructionSite>().ToHashSet();
+                // roadsInRoom = allRoomStructures.OfType<IStructureRoad>().ToHashSet();
 
                 //SyncScreepsGameObjects();
                 profiler.Profile("SyncScreepsGameObjects", () => SyncScreepsGameObjects(), true);
@@ -499,127 +482,97 @@ namespace ScreepsDotNet.World
                 myDebug.WriteLine($"allRoomStructures.Count: {allRoomStructures.Count()}");
             }
 
-            if (source1Link == null)
-            {
-                source1Link = GetSource1Link(allRoomStructures);
-                myDebug.WriteLine($"***1 source1Link: {source1Link}");
-
-            }
-
-
-            if (source2Link == null)
-            {
-                source2Link = GetSource2Link(allRoomStructures);
-                myDebug.WriteLine($"***1 source2Link: {source2Link}");
-
-            }
-
-            if (controllerLink == null)
-            {
-                controllerLink = GetControllerLink(allRoomStructures);
-                myDebug.WriteLine($"***1 controllerLink: {controllerLink}");
-            }
-
-            if (storageLink == null)
-            {
-                storageLink = GetStorageLink(allRoomStructures);
-                myDebug.WriteLine($"***1 controllerLink: {controllerLink}");
-            }
+            // InitLinks();
+            // Console.WriteLine($"500 allCreepsInRoom.Count: {allCreepsInRoom.Count}");
 
             //TickLinks();
             profiler.Profile("TickLinks", () => TickLinks(), true);
 
+            //CreepHandler();
+            profiler.Profile("CreepHandler()", () => CreepHandler(), true);
 
 
 
-            var allCreeps = room.Find<ICreep>().ToHashSet();
-            // Check for any creeps we're tracking that no longer exist
-            foreach (var creep in this.allCreepsInRoom.ToArray())
-            {
+            //var allCreeps = room.Find<ICreep>().ToHashSet();
 
-                var respawnTick = this.respawnTick;
-
-                //if (room.Name == "W27S55")
-                //{
-                //    respawnTick = 94;
-                //}
-
-                if (creep.Exists)
-                {
-
-                    if (creep.My == false)
-                    {
-                        return;
-                    }
+            //// Check for any creeps we're tracking that no longer exist
 
 
+            //foreach (ICreep? creep in this.allCreepsInRoom.ToArray())
+            //{
 
-                    if (creep.Exists)
-                    {
+            //    var respawnTick = this.respawnTick;
 
-                        var getMemStatus = creep.Memory.TryGetInt("respawnTick", out var creepRespawnTick);
-                        if (getMemStatus)
-                        {
-                            respawnTick = creepRespawnTick;
-                        }
+            //    if (creep.Exists)
+            //    {
+            //        if (creep.My == false)
+            //        {
+            //            return;
+            //        }
 
-                        if (creep.TicksToLive == respawnTick)
-                        {
+            //        if (creep.Exists)
+            //        {
 
-                            //    if (allCreepsInRoom.Count <= maxTotalCreeps)
-                            //    {
-                            var creepData = new myCreepData(creep);
-                            myDebug.WriteLine($"creepData.spawnName {creepData.spawnName}");
-                            myDebug.WriteLine($"creepData.role {creepData.role}");
-                            spawnQueue.Enqueue(creepData);
-                            //   }
+            //            var getMemStatus = creep.Memory.TryGetInt("respawnTick", out var creepRespawnTick);
+            //            if (getMemStatus)
+            //            {
+            //                respawnTick = creepRespawnTick;
+            //            }
 
-                        }
-                    }
-                    continue;
-                }
+            //            if (creep.TicksToLive == respawnTick)
+            //            {
+            //                var creepData = new myCreepData(creep);
+            //                myDebug.WriteLine($"creepData.spawnName {creepData.spawnName}");
+            //                myDebug.WriteLine($"creepData.role {creepData.role}");
+            //                spawnQueue.Enqueue(creepData);
+            //                //   }
 
-                var removeStatus = allCreepsInRoom.Remove(creep);
-                //Console.WriteLine("Creep name: " + creep.Name);
+            //            }
+            //        }
+            //        continue;
+            //    }
 
-                OnCreepDied(creep);
+            //    var removeStatus = allCreepsInRoom.Remove(creep);
+            //    //Console.WriteLine("Creep name: " + creep.Name);
 
-
-            }
-
-            invaderCreeps = allCreeps.Where(x => !x.My).ToHashSet();
-            var newCreepList = allCreeps.Where(x => x.My); //.OrderByDescending(x => x.TicksToLive).ToList();
-
-
-            foreach (var creep in newCreepList)
-            {
-                TTLCountDown(creep, 100);
-                if (!allCreepsInRoom.Add(creep)) { continue; }
-                OnAssignRole(creep);
-            }
-
-            stopwatch.Stop();
-            long executeTimeUpToCreeps = stopwatch.ElapsedMilliseconds;
-
-            // Tick all tracked creeps
-            // var minerCount = 0;
-            stopwatch.Reset();
-            stopwatch.Start();
-            status = Spawn1.Memory.TryGetBool("pauseAllCreeps", out var pauseAllCreeps);
-            // Console.WriteLine($"status: {status}");
-            if (status == true)
-            {
-                if (pauseAllCreeps == false)
-                {
-                    profiler.Profile("RunCreeps", () => RunCreeps(), true);
-                }
-            }
+            //    OnCreepDied(creep);
 
 
-            stopwatch.Stop();
-            long creepsExecuteTime = stopwatch.ElapsedMilliseconds;
-            stopwatch.Reset();
-            stopwatch.Start();
+            //}
+
+            //invaderCreeps = allCreeps.Where(x => !x.My).ToHashSet();
+            //var newCreepList = allCreeps.Where(x => x.My); //.OrderByDescending(x => x.TicksToLive).ToList();
+
+
+            //foreach (var creep in newCreepList)
+            //{
+            //    TTLCountDown(creep, 100);
+            //    if (!allCreepsInRoom.Add(creep)) { continue; }
+            //    OnAssignRole(creep);
+            //}
+
+            //stopwatch.Stop();
+            //long executeTimeUpToCreeps = stopwatch.ElapsedMilliseconds;
+
+            //// Tick all tracked creeps
+            //// var minerCount = 0;
+            //stopwatch.Reset();
+            //stopwatch.Start();
+            //status = Spawn1.Memory.TryGetBool("pauseAllCreeps", out var pauseAllCreeps);
+            //// Console.WriteLine($"status: {status}");
+            //if (status == true)
+            //{
+            //    if (pauseAllCreeps == false)
+            //    {
+            //        profiler.Profile("RunCreeps", () => RunCreeps(), true);
+            //    }
+            //}
+
+
+            //stopwatch.Stop();
+            //long creepsExecuteTime = stopwatch.ElapsedMilliseconds;
+            //stopwatch.Reset();
+            //stopwatch.Start();
 
             //   containersInRoom = allRoomStructures.OfType<IStructureContainer>().ToHashSet();
 
@@ -636,7 +589,7 @@ namespace ScreepsDotNet.World
             // towersInRoom = allRoomStructures.OfType<IStructureTower>().ToHashSet();
             //  Console.WriteLine($"           xtowersInRoom.Count: {towersInRoom.Count}");
 
-            profiler.Profile("TickGetStructureUpdates", () => TickGetStructureUpdates());
+            profiler.Profile("TickGetStructureUpdates", () => TickGetStructureUpdates(5));
 
             DisplayStats();
 
@@ -669,6 +622,36 @@ namespace ScreepsDotNet.World
 
         }
 
+        private void InitLinks()
+        {
+            if (source1Link == null)
+            {
+                source1Link = GetSource1Link(allRoomStructures);
+                myDebug.WriteLine($"***1 source1Link: {source1Link}");
+
+            }
+
+
+            if (source2Link == null)
+            {
+                source2Link = GetSource2Link(allRoomStructures);
+                myDebug.WriteLine($"***1 source2Link: {source2Link}");
+
+            }
+
+            if (controllerLink == null)
+            {
+                controllerLink = GetControllerLink(allRoomStructures);
+                myDebug.WriteLine($"***1 controllerLink: {controllerLink}");
+            }
+
+            if (storageLink == null)
+            {
+                storageLink = GetStorageLink(allRoomStructures);
+                myDebug.WriteLine($"***1 controllerLink: {controllerLink}");
+            }
+        }
+
         private void TickAllSpawns()
         {
             // Tick all spawns
@@ -679,20 +662,117 @@ namespace ScreepsDotNet.World
             }
         }
 
-        private void TickGetStructureUpdates()
+        private void TickGetStructureUpdates(int updateTick)
         {
-            var extensionsInRoom = allRoomStructures.OfType<IStructureExtension>().ToList();
+            if (currentGameTick % updateTick !=0)
+            {
+                return;
+            }
+
+            // UpdateTowersEngeryStatus();
+            profiler.Profile("CheckTowersEngeryStatus", () => UpdateTowersEngeryStatus(10), false);
+            UpdateExentions(10);
+            
+            
+            UpateRepartTargets(25);
+
+
+
+            // Console.WriteLine(" ");
+            //  Console.WriteLine("Adding constructionSite to constructionSites");
+            UpdateConstructionSites(20);
+            // Console.WriteLine(" ");
+
+
+
+            // Console.WriteLine(" ");
+            // Console.WriteLine("Adding extension that need energy to to extensionTargets");
+            //extensionTargets.Clear();
+            //foreach (var extension in extensionsInRoom.Where(x => x.Store.GetUsedCapacity(ResourceType.Energy) < x.Store.GetCapacity(ResourceType.Energy)))
+            //{
+            //    extensionTargets.Add(extension);
+            //}
+
+            //  Console.WriteLine("  extension that need energy: " + extensionTargets.Count);
+            //  Console.WriteLine(" ");
+
+        }
+
+        private void UpdateExentions(int updateTick)
+        {
+
+            if (currentGameTick % updateTick != 0)
+            {
+                return;
+            }
+
+            var extensionsInRoom = allRoomStructures.OfType<IStructureExtension>();
             var extensionsThatNeedEnergy = extensionsInRoom.Where(x => x.Store.GetFreeCapacity(ResourceType.Energy) > 0);
+            //var extentionsThatNeedEnergy = extensionsInRoom.Where(x => x.Store.GetUsedCapacity(ResourceType.Energy) < 50);
+
+            extensionTargets.Clear();
+
+            foreach (var extensionsTarget in extensionsThatNeedEnergy)
+            {
+                extensionTargets.Add(extensionsTarget);
+            }
+
+            myDebug.WriteLine("extensions that need energy: " + extensionTargets.Count);
+        }
+
+        private void UpdateConstructionSites(int updateTick)
+        {
+            if (currentGameTick % updateTick != 0)
+            {
+                return;
+            }
+
+            constructionSites.Clear();
+            foreach (var constructionSite in allRoomStructures.OfType<IConstructionSite>())
+            //   foreach (var constructionSite in allContructionSites) 
+            {
+                constructionSites.Add(constructionSite);
+            }
+            // Console.WriteLine("   constructionSites.Count: " + constructionSites.Count);
+        }
+
+        private void UpateRepartTargets(int updateTick)
+        {
+            if (currentGameTick % updateTick != 0)
+            {
+                return;
+            }
+
+            repairTargets.Clear();
+
+            var roadsThatNeedRepair = roadsInRoom.Where(x => x.Hits < x.HitsMax);
+
+            foreach (var road in roadsThatNeedRepair)
+            {
+                repairTargets.Add(road);
+
+            }
+
+            var containersThatNeedRepair = containersInRoom.Where(x => x.Hits < x.HitsMax);
+            foreach (var container in containersThatNeedRepair)
+            {
+                repairTargets.Add(container);
+            }
 
 
+            myDebug.WriteLine("structures that need be repaired: " + repairTargets.Count);
+        }
 
-            // Console.WriteLine("Adding towers to towerTargets");
+        private void UpdateTowersEngeryStatus(int updateTick)
+        {
+            if (currentGameTick % updateTick != 0)
+            {
+                return;
+            }
+
             towerTargets.Clear();
 
             var towersThatNeedEnergy = towersInRoom.Where(x => x.Store.GetUsedCapacity(ResourceType.Energy) <= 900);
-            //var towersThatNeedEnergy = towersInRoom.Where(x => x.Store.GetUsedCapacity(ResourceType.Energy) < creep.Store.GetCapacity(ResourceType.Energy));
-            // var towersThatNeedEnergy = towersInRoom.Where(x => x.Store.GetFreeCapacity(ResourceType.Energy) >= 100);
-            //   Console.WriteLine("   towersThatNeedEnergy: " + towersThatNeedEnergy.Count());
 
             // adding towers to items that need additional energy
             if (towersThatNeedEnergy.Count() > 0)
@@ -702,105 +782,8 @@ namespace ScreepsDotNet.World
                     towerTargets.Add(Tower);
                 }
                 myDebug.WriteLine("   Towers that need energy: " + towerTargets.Count);
-
                 myDebug.WriteLine("Adding extensions to extensionTargets");
-                extensionTargets.Clear();
-                // var extentionsThatNeedEnergy = room.Find<IStructureExtension>().Where(x => x.Store.GetUsedCapacity(ResourceType.Energy) < x.Store.GetCapacity(ResourceType.Energy));
-                // var extentionsThatNeedEnergy = room.Find<IStructureExtension>().Where(x => x.Store.GetUsedCapacity(ResourceType.Energy) < 50);
-                var extentionsThatNeedEnergy = extensionsInRoom.Where(x => x.Store.GetUsedCapacity(ResourceType.Energy) < 50);
-                foreach (var extensionsTarget in extentionsThatNeedEnergy)
-                {
-                    extensionTargets.Add(extensionsTarget);
-                }
-
-
-                myDebug.WriteLine("extensions that need energy: " + extensionTargets.Count);
-                myDebug.WriteLine(" ");
-                myDebug.WriteLine("Adding repairTarget to repairTargets");
-
             }
-
-            //Console.WriteLine(" "); ///asdasd
-            // Console.WriteLine("Adding structures that need be repaired to towerTargets");
-
-
-
-            // IEnumerable<IStructure> structuresThatNeedRepair;
-            //IStructure structuresThatNeedRepair;// = room.Find<IStructure>().Where(x => x.Hits < 10000); ;
-
-            repairTargets.Clear();
-
-
-
-
-
-            //            var structuresThatNeedRepair = allStructures.Where(x => x.Hits < x.HitsMax).ToHashSet();
-            //            Console.WriteLine($"-- structuresThatNeedRepair: {structuresThatNeedRepair.Count}"); // always returns 0
-            //  //          Console.WriteLine($"-- structuresThatNeedRepair: {structuresThatNeedRepair.Count}"); // always returns 0
-            //                                                                                                 //          var roads = allRoomStructures.OfType<IStructureRoad>().ToList();
-            //            var roads = allStructures.OfType<IStructureRoad>().ToHashSet();
-            //]            Console.WriteLine($"-- roads.Count: {roads.Count}"); // always returns 0
-
-            //            var roadsToBeRepaired = roads.Where(x => x.Hits < x.HitsMax).ToHashSet();
-
-
-            //            var xroadsToBeRepaired  = allStructures.OfType<IStructureRoad>().Where(x => x.Hits < x.HitsMax).ToHashSet() ;
-
-            //            Console.WriteLine($"--  allStructures.OfType<IStructureRoad>().Where(x => x.Hits < x.HitsMax): {xroadsToBeRepaired.Count}"); // returns roads that need repaired
-
-
-
-
-
-            roadsThatNeedRepair = roadsInRoom.Where(x => x.Hits < x.HitsMax).ToHashSet();
-            containersThatNeedRepair = containersInRoom.Where(x => x.Hits < x.HitsMax).ToHashSet();
-
-
-
-            foreach (var road in roadsThatNeedRepair)
-            {
-                repairTargets.Add(road);
-
-            }
-            foreach (var container in containersThatNeedRepair)
-            {
-                repairTargets.Add(container);
-
-            }
-
-
-            myDebug.WriteLine("structures that need be repaired: " + repairTargets.Count);
-
-
-
-            // Console.WriteLine(" ");
-            //  Console.WriteLine("Adding constructionSite to constructionSites");
-            constructionSites.Clear();
-            foreach (var constructionSite in allRoomStructures.OfType<IConstructionSite>())
-            //   foreach (var constructionSite in allContructionSites) 
-            {
-                constructionSites.Add(constructionSite);
-            }
-            // Console.WriteLine("   constructionSites.Count: " + constructionSites.Count);
-            // Console.WriteLine(" ");
-
-
-
-            // Console.WriteLine(" ");
-            // Console.WriteLine("Adding extension that need energy to to extensionTargets");
-            extensionTargets.Clear();
-            foreach (var extension in extensionsInRoom.Where(x => x.Store.GetUsedCapacity(ResourceType.Energy) < x.Store.GetCapacity(ResourceType.Energy)))
-            {
-                extensionTargets.Add(extension);
-            }
-
-            //  Console.WriteLine("  extension that need energy: " + extensionTargets.Count);
-            //  Console.WriteLine(" ");
-
-            //foreach (var container in containers)
-            //{
-            //    Console.WriteLine("container: " + container.RoomPosition.Position.ToString());
-            //}
         }
 
         private void RunCreeps()
@@ -958,6 +941,91 @@ namespace ScreepsDotNet.World
 
             Spawn1.Memory.TryGetBool("displayStats", out this.displayStats);
             myDebug.WriteLine($"displayStats: {this.displayStats}"); //test
+
+        }
+
+        private void CreepHandler()
+        {
+            var allCreeps = room.Find<ICreep>().ToHashSet();
+
+            // Check for any creeps we're tracking that no longer exist
+
+
+            foreach (ICreep? creep in this.allCreepsInRoom.ToArray())
+            {
+
+                var respawnTick = this.respawnTick;
+
+                if (creep.Exists)
+                {
+                    if (creep.My == false)
+                    {
+                        return;
+                    }
+
+                    if (creep.Exists)
+                    {
+
+                        var getMemStatus = creep.Memory.TryGetInt("respawnTick", out var creepRespawnTick);
+                        if (getMemStatus)
+                        {
+                            respawnTick = creepRespawnTick;
+                        }
+
+                        if (creep.TicksToLive == respawnTick)
+                        {
+                            var creepData = new myCreepData(creep);
+                            myDebug.WriteLine($"creepData.spawnName {creepData.spawnName}");
+                            myDebug.WriteLine($"creepData.role {creepData.role}");
+                            spawnQueue.Enqueue(creepData);
+                            //   }
+
+                        }
+                    }
+                    continue;
+                }
+
+                var removeStatus = allCreepsInRoom.Remove(creep);
+                //Console.WriteLine("Creep name: " + creep.Name);
+
+                OnCreepDied(creep);
+
+
+            }
+
+            invaderCreeps = allCreeps.Where(x => !x.My).ToHashSet();
+            var newCreepList = allCreeps.Where(x => x.My); //.OrderByDescending(x => x.TicksToLive).ToList();
+
+
+            foreach (var creep in newCreepList)
+            {
+                TTLCountDown(creep, 100);
+                if (!allCreepsInRoom.Add(creep)) { continue; }
+                OnAssignRole(creep);
+            }
+
+            stopwatch.Stop();
+         //   long executeTimeUpToCreeps = stopwatch.ElapsedMilliseconds;
+
+            // Tick all tracked creeps
+            // var minerCount = 0;
+            stopwatch.Reset();
+            stopwatch.Start();
+            var status = Spawn1.Memory.TryGetBool("pauseAllCreeps", out var pauseAllCreeps);
+            // Console.WriteLine($"status: {status}");
+            if (status == true)
+            {
+                if (pauseAllCreeps == false)
+                {
+                    profiler.Profile("RunCreeps", () => RunCreeps(), true);
+                }
+            }
+
+
+            stopwatch.Stop();
+            creepsExecuteTime = stopwatch.ElapsedMilliseconds;
+            stopwatch.Reset();
+            stopwatch.Start();
 
         }
 
