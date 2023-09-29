@@ -124,10 +124,11 @@ namespace ScreepsDotNet.World
         private readonly ISet<ICreep> workerCreeps = new HashSet<ICreep>();
         private readonly ISet<ICreep> repairCreeps = new HashSet<ICreep>();
         private readonly ISet<ICreep> tankerCreeps = new HashSet<ICreep>();
-        private ISet<IStructure> allRoomStructures = new HashSet<IStructure>();
+        //private ISet<IStructure> allRoomStructures = new HashSet<IStructure>();
+        private IEnumerable<IStructure> allRoomStructures;
         private ISet<IRoomObject> allRoomObjects = new HashSet<IRoomObject>();
         private Queue<myCreepData> spawnQueue = new Queue<myCreepData>();
-        private CpuUseageHistory<double> cpuUseageHistory = new CpuUseageHistory<double>(150);
+        private CpuUseageHistory<double> cpuUseageHistory = new CpuUseageHistory<double>(1500);
 
 
         //private IEnumerable allRoomStructures;
@@ -373,13 +374,15 @@ namespace ScreepsDotNet.World
 
         private void SyncScreepsGameObjects()
         {
-            allRoomStructures = room.Find<IStructure>().ToHashSet();
+            allRoomStructures = room.Find<IStructure>();
             allRoomFlags = room.Find<IFlag>().ToHashSet();
             containersInRoom = allRoomStructures.OfType<IStructureContainer>().ToHashSet();
-
+            
             //allContainers = allRoomStructures.OfType<IStructureContainer>().ToHashSet();
             towersInRoom = allRoomStructures.OfType<IStructureTower>().ToHashSet();
             allContructionSitesInRoom = allRoomStructures.OfType<IConstructionSite>().ToHashSet();
+
+            Console.WriteLine($"allContructionSitesInRoom.Count: {allContructionSitesInRoom.Count}");
             allContainers = allRoomStructures.OfType<IStructureContainer>().ToHashSet();
             roadsInRoom = allRoomStructures.OfType<IStructureRoad>().ToHashSet();
         }
@@ -387,7 +390,7 @@ namespace ScreepsDotNet.World
         public void Tick()
         {
            
-            stopwatch.Start();
+            //stopwatch.Start();
             Console.WriteLine(" ");
             Console.WriteLine("******************** !Start of Tick Test World! ********************");
 
@@ -412,9 +415,7 @@ namespace ScreepsDotNet.World
 
            // this.updateSpawn1Memory();
             profiler.Profile("updateSpawn1Memory", () => this.updateSpawn1Memory(), true);
-            Console.WriteLine($"430 allCreepsInRoom.Count: {allCreepsInRoom.Count}");
-
-
+          
 
             // Console.WriteLine("reading memory: Start");
             // roomMemory = game.Memory.GetOrCreateObject(this.room.Name);
@@ -476,7 +477,7 @@ namespace ScreepsDotNet.World
                 // allContructionSitesInRoom = allRoomStructures.OfType<IConstructionSite>().ToHashSet();
                 // roadsInRoom = allRoomStructures.OfType<IStructureRoad>().ToHashSet();
 
-                //SyncScreepsGameObjects();
+                // SyncScreepsGameObjects();
                 profiler.Profile("SyncScreepsGameObjects", () => SyncScreepsGameObjects(), true);
 
                 myDebug.WriteLine($"allRoomStructures.Count: {allRoomStructures.Count()}");
@@ -589,31 +590,23 @@ namespace ScreepsDotNet.World
             // towersInRoom = allRoomStructures.OfType<IStructureTower>().ToHashSet();
             //  Console.WriteLine($"           xtowersInRoom.Count: {towersInRoom.Count}");
 
-            profiler.Profile("TickGetStructureUpdates", () => TickGetStructureUpdates(5));
+            profiler.Profile("TickGetStructureUpdates", () => TickGetStructureUpdates(10));
 
             DisplayStats();
 
             //TickAllSpawns();
             profiler.Profile("TickAllSpawns", () => TickAllSpawns());
 
-
-
-
-
-            //Console.WriteLine($"------- towersInRoom.Count: {towersInRoom.Count}");
-
             profiler.Profile("TickTowers", () => TickTowers(), true);
 
-            //   Console.WriteLine($"*** Spawn11.Name: {Spawn11.Name}");
-            //   Console.WriteLine($"*** Spawn12.Name: {Spawn12.Name}");
-
-            stopwatch.Stop();
-            long toTheEndExecutionTime = stopwatch.ElapsedMilliseconds;
+            // stopwatch.Stop();
+            // long toTheEndExecutionTime = stopwatch.ElapsedMilliseconds;
 
             Console.WriteLine(" ");
             Console.WriteLine("******************** !!!End of tick!!! ********************");
 
-            profiler.Profile("RoomOverlay", () => RoomOverlay(executeTimeUpToCreeps, creepsExecuteTime, toTheEndExecutionTime), true);
+             RoomOverlay();
+            // profiler.Profile("RoomOverlay", () => RoomOverlay(executeTimeUpToCreeps, creepsExecuteTime, toTheEndExecutionTime), true);
 
             Console.WriteLine(" ");
             profiler.DisplayProfileResults();
@@ -717,7 +710,7 @@ namespace ScreepsDotNet.World
                 extensionTargets.Add(extensionsTarget);
             }
 
-            myDebug.WriteLine("extensions that need energy: " + extensionTargets.Count);
+            Console.WriteLine("extensions that need energy: " + extensionTargets.Count);
         }
 
         private void UpdateConstructionSites(int updateTick)
@@ -726,14 +719,14 @@ namespace ScreepsDotNet.World
             {
                 return;
             }
-
+            
             constructionSites.Clear();
             foreach (var constructionSite in allRoomStructures.OfType<IConstructionSite>())
             //   foreach (var constructionSite in allContructionSites) 
             {
                 constructionSites.Add(constructionSite);
             }
-            // Console.WriteLine("   constructionSites.Count: " + constructionSites.Count);
+            Console.WriteLine("   constructionSites.Count: " + constructionSites.Count);
         }
 
         private void UpateRepartTargets(int updateTick)
@@ -896,7 +889,7 @@ namespace ScreepsDotNet.World
             }
         }
 
-        private void RoomOverlay(long executeTimeUpToCreeps, long creepsExecuteTime, long toTheEndExecutionTime)
+          private void RoomOverlay()
         {
             var bucket = game.Cpu.Bucket;
             //  var getUsed = game.Cpu.GetUsed;
@@ -905,13 +898,19 @@ namespace ScreepsDotNet.World
 
 
             var cpuUsed = game.Cpu.GetUsed();
+            if (cpuUsed ==0 || cpuUsed >= 20)
+            {
+                return;
+            }
+
             cpuUseageHistory.Enqueue(cpuUsed);
             var cpuAverage = cpuUseageHistory.CalculateAverage();
 
-            roomText($"       executeTimeUpToCreeps: {executeTimeUpToCreeps} ms", x, y);
-            roomText($"Execution Time of all Creeps: {creepsExecuteTime} ms", x, ++y);
-            roomText($"Execution From Creeps To End: {toTheEndExecutionTime} ms", x, ++y);
-            roomText($"          game.Cpu.GetUsed(): {Math.Round(game.Cpu.GetUsed(), 2)}", x, ++y);
+           // roomText($"       executeTimeUpToCreeps: {executeTimeUpToCreeps} ms", x, y);
+           // roomText($"Execution Time of all Creeps: {creepsExecuteTime} ms", x, ++y);
+           // roomText($"Execution From Creeps To End: {toTheEndExecutionTime} ms", x, ++y);
+           roomText($"          game.Cpu.GetUsed(): {Math.Round(game.Cpu.GetUsed(), 2)}", x, ++y);
+            
             roomText($"                  cpuAverage: {Math.Round(cpuAverage, 2)}", x, ++y);
             roomText($"                      bucket: {bucket}", x, ++y);
         }
@@ -1004,13 +1003,13 @@ namespace ScreepsDotNet.World
                 OnAssignRole(creep);
             }
 
-            stopwatch.Stop();
+           //  stopwatch.Stop();
          //   long executeTimeUpToCreeps = stopwatch.ElapsedMilliseconds;
 
             // Tick all tracked creeps
             // var minerCount = 0;
-            stopwatch.Reset();
-            stopwatch.Start();
+           // stopwatch.Reset();
+           // stopwatch.Start();
             var status = Spawn1.Memory.TryGetBool("pauseAllCreeps", out var pauseAllCreeps);
             // Console.WriteLine($"status: {status}");
             if (status == true)
@@ -1022,10 +1021,10 @@ namespace ScreepsDotNet.World
             }
 
 
-            stopwatch.Stop();
-            creepsExecuteTime = stopwatch.ElapsedMilliseconds;
-            stopwatch.Reset();
-            stopwatch.Start();
+            //stopwatch.Stop();
+            //creepsExecuteTime = stopwatch.ElapsedMilliseconds;
+            //stopwatch.Reset();
+            //stopwatch.Start();
 
         }
 
@@ -1344,8 +1343,6 @@ namespace ScreepsDotNet.World
 
             }
         }
-
-        //  Console.WriteLine($"{this}: {creep} unknown role");
 
 
         private void OnCreepDied(ICreep creep)
@@ -1807,7 +1804,7 @@ namespace ScreepsDotNet.World
                         var transferStatus = this.source2Link.TransferEnergy(this.controllerLink);
                         if (transferStatus != LinkTransferEnergyResult.Ok)
                         {
-                            Console.WriteLine($"Link transfered to controller link failed with the status of {transferStatus}");
+                            // Console.WriteLine($"Link transfered to controller link failed with the status of {transferStatus}");
                             return;
                         }
                     }
@@ -2832,7 +2829,7 @@ namespace ScreepsDotNet.World
                     return;
                 }
 
-                Console.WriteLine($"{this}: {creep} Target {extensionTarget} energy ({extensionTarget.Store.GetUsedCapacity(ResourceType.Energy)})");
+                // Console.WriteLine($"{this}: {creep} Target {extensionTarget} energy ({extensionTarget.Store.GetUsedCapacity(ResourceType.Energy)})");
 
                 // IStructureExtension extensionTarget = extensionTargets.First();
 
