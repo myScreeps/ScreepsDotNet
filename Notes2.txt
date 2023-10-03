@@ -1,0 +1,3 @@
+Notes
+
+dotnet install package ScreepsDotNet.Bundler -Version 1.1.0

@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreepsDotNet.API", "Screep
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreepsDotNet.Bundler", "ScreepsDotNet.Bundler\ScreepsDotNet.Bundler.csproj", "{11F69637-6C57-43D3-9CA6-CDEC7CCE2F20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreepsDotNet.API.Tests", "ScreepsDotNet.API.Tests\ScreepsDotNet.API.Tests.csproj", "{CECA1347-E97B-496F-8CE6-E897267C8CB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreepsDotNet.API.Tests", "ScreepsDotNet.API.Tests\ScreepsDotNet.API.Tests.csproj", "{CECA1347-E97B-496F-8CE6-E897267C8CB6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6274CC77-8D65-4856-AF38-79BC55481169}"
+	ProjectSection(SolutionItems) = preProject
+		Notes2.txt = Notes2.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
