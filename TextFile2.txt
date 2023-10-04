@@ -1,0 +1,26 @@
+10:47:37 PM][shard3]DOTNET  ---- IN PickupEnergy
+[10:47:37 PM][shard3]DOTNET  ---- Out PickupEnergy
+[10:47:37 PM][shard3]DOTNET  if (creep.Store.GetFreeCapacity(ResourceType.Energy) > 0
+[10:47:37 PM][shard3]DOTNET  if (source1Link != null)
+[10:47:37 PM][shard3]DOTNET  IN if (spawn.Store.GetFreeCapacity(ResourceType.Energy) >= 50)
+[10:47:37 PM][shard3]DOTNET  OUT if (spawn.Store.GetFreeCapacity(ResourceType.Energy) >= 50)
+[10:47:40 PM][shard3]   at ScreepsDotNet.World.RoomManager.TickSource1Miner(ICreep , ISource )
+   at ScreepsDotNet.World.RoomManager.RunCreeps()
+   at ScreepsDotNet.World.RoomManager.<CreepHandler>b__98_2()
+   at ScreepsDotNet.World.profiler.ScreepsProfiler.Profile(String , Action , Boolean )
+   at ScreepsDotNet.World.RoomManager.CreepHandler()
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_522001812(JSMarshalerArgument* __arguments_buffer)
+Error: Object reference not set to an instance of an object.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:9:3)
+    at dotNet.loop (main:343:65)
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.exports.evalCode (<runtime>:15851:76)
+[10:47:40 PM][shard3]DOTNET   

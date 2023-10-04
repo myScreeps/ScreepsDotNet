@@ -14,16 +14,8 @@ using System.Xml;
 using System.Xml.Linq;
 using Microsoft.VisualBasic;
 using ScreepsDotNet.API;
-
-// using ScreepsDotNet.API.Arena;
-// using ScreepsDotNet.API.Arena;
-// using ScreepsDotNet.API.Arena;
 using ScreepsDotNet.API.World;
 using ScreepsDotNet.World.profiler;
-//using static System.Net.Mime.MediaTypeNames;
-//using static System.Runtime.InteropServices.JavaScript.JSType;
-//using IGame = ScreepsDotNet.API.World.IGame;
-//using IResource = ScreepsDotNet.API.World.IResource;
 
 // W27S55 reached level 7 morning of Wed Sept 19th, 2023
 namespace ScreepsDotNet.World
@@ -182,8 +174,8 @@ namespace ScreepsDotNet.World
 
         private static readonly BodyType<BodyPartType> simpleWorkerBodyType = new(stackalloc (BodyPartType, int)[] { (BodyPartType.Move, 1), (BodyPartType.Carry, 1), (BodyPartType.Work, 1) });
         private static readonly BodyType<BodyPartType> medWorkerBodyType = new(stackalloc (BodyPartType, int)[] { (BodyPartType.Move, 4), (BodyPartType.Carry, 2), (BodyPartType.Work, 2) });
-        private static readonly BodyType<BodyPartType> miner1BodyType = new(stackalloc (BodyPartType, int)[] { (BodyPartType.Move, 7), (BodyPartType.Carry, 2), (BodyPartType.Work, 5) });
-        private static readonly BodyType<BodyPartType> miner1LargeBodyType = new(stackalloc (BodyPartType, int)[] { (BodyPartType.Move, 5), (BodyPartType.Carry, 4), (BodyPartType.Work, 7) });
+        private static readonly BodyType<BodyPartType> miner1BodyType = new(stackalloc (BodyPartType, int)[] { (BodyPartType.Move, 5), (BodyPartType.Carry, 2), (BodyPartType.Work, 5) });
+        private static readonly BodyType<BodyPartType> miner1LargeBodyType = new(stackalloc (BodyPartType, int)[] { (BodyPartType.Move, 7), (BodyPartType.Carry, 4), (BodyPartType.Work, 7) });
         private static readonly BodyType<BodyPartType> miner2BodyType = new(stackalloc (BodyPartType, int)[] { (BodyPartType.Move, 1), (BodyPartType.Carry, 1), (BodyPartType.Work, 7) });
 
         private static IMemoryObject gameMemory;
@@ -234,10 +226,6 @@ namespace ScreepsDotNet.World
             {
                 Spawn3 = game.Spawns.Values.ToArray()[2];
             }
-
-            //var soure1_W = game.Flags
-            // Spawn1.Memory.SetValue("targetUpgraderCount", 7);
-            // bool status = Spawn1.Memory.TryGetInt("targetUpgraderCount", out targetUpgraderCount1);
 
         }
 
@@ -479,8 +467,8 @@ namespace ScreepsDotNet.World
             //    Console.WriteLine($"currentGameTick.GetType().BaseType: {currentGameTick.GetType().BaseType}");
             //}
 
-            // this.updateSpawn1Memory();
-            profiler.Profile("updateSpawn1Memory", () => this.updateSpawn1Memory(), true);
+            this.updateSpawn1Memory();
+            //profiler.Profile("updateSpawn1Memory", () => this.updateSpawn1Memory(), true);
 
 
 
@@ -545,8 +533,8 @@ namespace ScreepsDotNet.World
                 // allContructionSitesInRoom = allRoomStructures.OfType<IConstructionSite>().ToHashSet();
                 // roadsInRoom = allRoomStructures.OfType<IStructureRoad>().ToHashSet();
 
-                // SyncScreepsGameObjects();
-                profiler.Profile("SyncScreepsGameObjects", () => SyncScreepsGameObjects(), true);
+                SyncScreepsGameObjects();
+                //profiler.Profile("SyncScreepsGameObjects", () => SyncScreepsGameObjects(), true);
 
                 myDebug.WriteLine($"allRoomStructures.Count: {allRoomStructures.Count()}");
             }
@@ -554,11 +542,11 @@ namespace ScreepsDotNet.World
             // InitLinks();
             // Console.WriteLine($"500 allCreepsInRoom.Count: {allCreepsInRoom.Count}");
 
-            //TickLinks();
-            profiler.Profile("TickLinks", () => TickLinks(), true);
+            TickLinks();
+            //profiler.Profile("TickLinks", () => TickLinks(), true);
 
-            //CreepHandler();
-            profiler.Profile("CreepHandler()", () => CreepHandler(), true);
+            CreepHandler();
+            // profiler.Profile("CreepHandler()", () => CreepHandler(), true);
 
 
 
@@ -658,14 +646,16 @@ namespace ScreepsDotNet.World
             // towersInRoom = allRoomStructures.OfType<IStructureTower>().ToHashSet();
             //  Console.WriteLine($"           xtowersInRoom.Count: {towersInRoom.Count}");
 
-            profiler.Profile("TickGetStructureUpdates", () => TickGetStructureUpdates(10));
+            TickGetStructureUpdates(10);
+            //profiler.Profile("TickGetStructureUpdates", () => TickGetStructureUpdates(10));
 
             DisplayStats();
 
-            //TickAllSpawns();
-            profiler.Profile("TickAllSpawns", () => TickAllSpawns());
+            TickAllSpawns();
+            //Profiler.Profile("TickAllSpawns", () => TickAllSpawns());
 
-            profiler.Profile("TickTowers", () => TickTowers(), true);
+            TickTowers();
+            //profiler.Profile("TickTowers", () => TickTowers(), true);
 
 
 
@@ -732,14 +722,23 @@ namespace ScreepsDotNet.World
             {
                 return;
             }
+            Console.WriteLine("Start UpdateTowersEngeryStatus(10)");
+            UpdateTowersEngeryStatus(10);
+            Console.WriteLine("completed UpdateTowersEngeryStatus(10)");
 
-            // UpdateTowersEngeryStatus();
-            profiler.Profile("CheckTowersEngeryStatus", () => UpdateTowersEngeryStatus(10), false);
+          
+            // profiler.Profile("CheckTowersEngeryStatus", () => UpdateTowersEngeryStatus(10), false);
+            myDebug.WriteLine("Start UpdateExentions(10)");
             UpdateExentions(10);
-
+            myDebug.WriteLine("completed UpdateExentions(10)");
+          
+            myDebug.WriteLine("Start UpdateConstructionSites(10);");
             UpdateConstructionSites(10);
+            myDebug.WriteLine("completed UpdateConstructionSites(10);");
 
+            myDebug.WriteLine("Start UpateRepartTargets(10);");
             UpateRepartTargets(10);
+            Console.WriteLine("completed UpateRepartTargets(10);");
 
 
 
@@ -1165,7 +1164,6 @@ namespace ScreepsDotNet.World
 
             foreach (ICreep? creep in this.allCreepsInRoom.ToArray())
             {
-
                 var respawnTick = this.respawnTick;
 
                 if (creep.Exists)
@@ -1229,7 +1227,8 @@ namespace ScreepsDotNet.World
             {
                 if (pauseAllCreeps == false)
                 {
-                    profiler.Profile("RunCreeps", () => RunCreeps(), true);
+                    RunCreeps();
+                    //profiler.Profile("RunCreeps", () => RunCreeps(), true);
                 }
             }
 
@@ -1708,7 +1707,7 @@ namespace ScreepsDotNet.World
                 if (role == "miner1")
 
                 {
-                    if (room.Controller.Level >= 7 && room.EnergyAvailable >= 1000)
+                    if (room.Controller.Level >= 7 && room.EnergyAvailable >= 700)
                     {
                         screepData.bodyType = miner1LargeBodyType;
                         creepBodyType = miner1LargeBodyType;
@@ -1745,6 +1744,7 @@ namespace ScreepsDotNet.World
                 myDebug.WriteLine($"right before spawning creep");
                 myDebug.WriteLine($"1389 Active Spawn is {spawn.Name}");
                 myDebug.WriteLine($"1390 creepBodyType: {creepBodyType}");
+               
                 if (spawn.SpawnCreep(creepBodyType, name, new(dryRun: true)) == SpawnCreepResult.Ok)
                 {
                     myDebug.WriteLine($"1393 spawn.Name: {spawn.Name}");
@@ -1772,7 +1772,7 @@ namespace ScreepsDotNet.World
                     }
                     else
                     {
-
+                        
                         myDebug.WriteLine($"what is the creepBodyType: {creepBodyType}");
                         // spawn = Spawn1;
                         //  SpawnScreepOptions optionos = new
@@ -1788,7 +1788,9 @@ namespace ScreepsDotNet.World
 
             else if (allCreepsInRoom.Count < maxTotalCreeps)
             {
+                
                 var name = FindUniqueCreepName();
+               // creepBodyType = miner1LargeBodyType;
                 if (spawn.SpawnCreep(creepBodyType, name, new(dryRun: true)) == SpawnCreepResult.Ok)
                 {
                     myDebug.WriteLine($"{this}: spawning a {creepBodyType} from {spawn}...");
@@ -1799,7 +1801,7 @@ namespace ScreepsDotNet.World
                 }
             }
             // }
-
+            //
         }
 
         private void TickSource1Miner(ICreep creep, ISource source)
@@ -1808,13 +1810,18 @@ namespace ScreepsDotNet.World
             {
                 return;
             }
+            myDebug.WriteLine($"---- source: {source}");
 
+            myDebug.WriteLine($"---- IN PickupEnergy");
             PickupEnergy(creep);
             // Check energy storage
-            
+            myDebug.WriteLine($"---- Out PickupEnergy");
+
             if (creep.Store.GetFreeCapacity(ResourceType.Energy) > 0)
             {
-                //// There is space for more energy
+                myDebug.WriteLine($"---- IN if (creep.Store.GetFreeCapacity(ResourceType.Energy) > 0)");
+
+                //// There is space for more energy @@@@
                 //if (!sources.Any()) { return; }
 
 
@@ -1836,10 +1843,12 @@ namespace ScreepsDotNet.World
                 //{
 
                 //}
+                myDebug.WriteLine($"---- IN harvestResults = HarvestEnergy(creep, source)");
 
                 var harvestResults = HarvestEnergy(creep, source);
+                myDebug.WriteLine($"---- OUT harvestResults = HarvestEnergy(creep, source)");
 
-                Console.WriteLine($" ----- harvestResults: {harvestResults}");
+                //Console.WriteLine($" ----- harvestResults: {harvestResults}");
 
                 // exit here of Source is not in range
                 if (harvestResults == CreepHarvestResult.NotInRange)
@@ -1852,9 +1861,12 @@ namespace ScreepsDotNet.World
                 if (harvestResults != CreepHarvestResult.Ok)
                 {
 
+                    myDebug.WriteLine($"IN --------- harvestResults != CreepHarvestResult.Ok, harvestResults: {harvestResults}");
 
+                    myDebug.WriteLine("IN --------- EnergyWithDrawHandler(creep,this.Source1Container)");
 
                     EnergyWithDrawHandler(creep,this.Source1Container);
+                    myDebug.WriteLine("OUT --------- EnergyWithDrawHandler(creep,this.Source1Container)");
 
                     //if (this.Source1Container != null)
                     //{
@@ -1899,93 +1911,141 @@ namespace ScreepsDotNet.World
             else
             {
                 // We're full, go to drop off
+
+                //var termFree = room.Terminal.Store.GetFreeCapacity();
+
+                myDebug.WriteLine($"if (creep.Store.GetFreeCapacity(ResourceType.Energy) > 0");
                 if (!spawns.Any()) { return; }
                 var spawn = spawns.Best(x => -x.LocalPosition.LinearDistanceTo(creep.LocalPosition));
                 if (spawn == null) { return; }
 
                 CreepTransferResult transferResult;
 
+                myDebug.WriteLine($"if (source1Link != null)");
 
                 if (source1Link != null)
                 {
-                    // Console.WriteLine("--------- Transfering to Sourcelink1");
-                    if (creep.RoomPosition.Position.IsNextTo(this.source1Link.RoomPosition.Position))
-                    {
+                    Console.WriteLine("--------- Transfering to Sourcelink1");
+                    //if (creep.RoomPosition.Position.IsNextTo(this.source1Link.RoomPosition.Position))
+                    //{
                         if (source1Link.Store.GetFreeCapacity(ResourceType.Energy) > 0)
                         {
-                            transferResult = creep.Transfer(source1Link, ResourceType.Energy);
-                            if (transferResult == CreepTransferResult.Ok)
-                            {
-                                return;
-                            }
+                        myDebug.WriteLine("--------- IN TransferEnergy(creep, source1Link)");
+
+                        TransferEnergy(creep, source1Link);
+                        myDebug.WriteLine("--------- OUT TransferEnergy(creep, source1Link)");
+
+                        //transferResult = creep.Transfer(source1Link, ResourceType.Energy);
+                        //if (transferResult == CreepTransferResult.Ok)
+                        //{
+                        //    return;
+                        //}
+
+                        return;
                         }
-
-
-
-
-                    }
+                        // test
+                    //}
                 }
+                //Console.WriteLine("--------- skipping transfering to Sourcelink1");
 
 
 
 
-                var spawnFreeStorageSpace = spawn.Store.GetFreeCapacity(ResourceType.Energy);
-                var creepUsedCapacity = creep.Store.GetUsedCapacity(ResourceType.Energy);
-                if (spawnFreeStorageSpace >= 50)
+                //     var spawnFreeStorageSpace = spawn.Store.GetFreeCapacity(ResourceType.Energy);
+                //  var creepUsedCapacity = creep.Store.GetUsedCapacity(ResourceType.Energy);
+                myDebug.WriteLine($"IN if (spawn.Store.GetFreeCapacity(ResourceType.Energy) >= 50)");
+                if (spawn.Store.GetFreeCapacity(ResourceType.Energy) >= 50)
                 {
                     //               var spawnFreeEnergy = spawn.Store.GetFreeCapacity(ResourceType.Energy);
                     //               var creepUsedCapacity = creep.Store.GetUsedCapacity(ResourceType.Energy);
                     // Console.WriteLine($"{this}: creepUsedCapacity: {creepUsedCapacity})");
                     // Console.WriteLine($"{this}: spawnFreeEnergy: {spawnFreeStorageSpace}");
                     //test
+                    Console.WriteLine("--------- transfering to Spawn1");
+                    Console.WriteLine("--------- IN TransferEnergy(creep, spawn);");
+                    TransferEnergy(creep, spawn);
+                    Console.WriteLine("--------- OUT TransferEnergy(creep, spawn);");
+
                     //var result = TransferEnergy(creep, (ICreep)spawn);
-                    transferResult = creep.Transfer(spawn, ResourceType.Energy);
-                    if (transferResult == CreepTransferResult.NotInRange)
-                    {
-                        creep.MoveTo(spawn.RoomPosition);
-                        return;
-                    }
+                    //transferResult = creep.Transfer(spawn, ResourceType.Energy);
+                    //if (transferResult == CreepTransferResult.NotInRange)
+                    //{
+                    //    creep.MoveTo(spawn.RoomPosition);
+                    //    return;
+                    //}
+                    return;
 
                 }
-                else
+                myDebug.WriteLine($"OUT if (spawn.Store.GetFreeCapacity(ResourceType.Energy) >= 50)");
+
+                //else
+                // {
+                // Console.WriteLine("--------- skipping transfering to Spawn1");
+
+                // Only transfer energy to container when Source has energy
+                if (this.Source1Container.Store.GetFreeCapacity () > 0 && source.Energy > 0)
+                    {
+                    Console.WriteLine("--------- IN TransferEnergy(creep, this.Source1Container)");
+                    TransferEnergy(creep, this.Source1Container);
+                    Console.WriteLine("--------- OUT TransferEnergy(creep, this.Source1Container)");
+
+                    return;
+                    }
+
+                if (room.Storage != null && room.Storage.Store.GetFreeCapacity() > 0)
                 {
-                    if (room.Storage != null && room.Storage.Store.GetFreeCapacity() < 1000000)
-                    {
-                        // Console.WriteLine($"{this}: XXX creepUsedCapacity: {creepUsedCapacity})");
-                        // Console.WriteLine($"{this}: XXX spawnFreeEnergy: {spawnFreeStorageSpace}");
 
-                        //transferResult = creep.Transfer(room.Storage, ResourceType.Energy);
-                        //if (transferResult == CreepTransferResult.NotInRange)
-                        //{
-                        //    creep.MoveTo(room.Storage.RoomPosition);
-                        //    return;
+                    Console.WriteLine("--------- IN status = TransferEnergy(creep, room.Storage)");
+                    var status = TransferEnergy(creep, room.Storage);
+                    Console.WriteLine("--------- OUT status = TransferEnergy(creep, room.Storage)");
 
-                        var status = TransferEnergy(creep, room.Storage);
+                    // Console.WriteLine($"{this}: XXX creepUsedCapacity: {creepUsedCapacity})");
+                    // Console.WriteLine($"{this}: XXX spawnFreeEnergy: {spawnFreeStorageSpace}");
+                    // 
+                    //transferResult = creep.Transfer(room.Storage, ResourceType.Energy);
+                    //if (transferResult == CreepTransferResult.NotInRange)
+                    //{
+                    //    creep.MoveTo(room.Storage.RoomPosition);
+                    //    return;
 
 
-                        //}
-                    }
+                        return;
 
-                    if (room.Terminal != null && room.Terminal.Store.GetFreeCapacity() < room.Terminal.Store.GetCapacity())
-                    {
 
-                        //transferResult = creep.Transfer(room.Terminal, ResourceType.Energy);
-                        //if (transferResult == CreepTransferResult.NotInRange)
-                        //{
-                        //    creep.MoveTo(room.Terminal.RoomPosition);
-                        //    // return transferResult;
-                        //}
-
-                        var status = TransferEnergy(creep, room.Terminal);
-                        // status = TransferEnergy(creep, this.source1Flag);
-
-                        //if (status = 0)
-                        //{
-                        //    return;
-                        //}
-                    }
-
+                    //}
+                    //  }
+                    Console.WriteLine("--------- skipping transfering to Storage");
                 }
+
+                //   Console.WriteLine($"room.Terminal: {room.Terminal}");
+                //     Console.WriteLine($"room.Terminal.Store.GetFreeCapacity(): {room.Terminal.Store.GetFreeCapacity()}");
+                Console.WriteLine("--------- IN if (room.Terminal != null && room.Terminal.Store.GetFreeCapacity() > 0)");
+
+                if (room.Terminal != null && room.Terminal.Store.GetFreeCapacity() > 0)
+                    {
+                    Console.WriteLine($"entering room.Terminal transfer");
+
+                    //transferResult = creep.Transfer(room.Terminal, ResourceType.Energy);
+                    //if (transferResult == CreepTransferResult.NotInRange)
+                    //{
+                    //    creep.MoveTo(room.Terminal.RoomPosition);
+                    //    // return transferResult;
+                    //}
+                    Console.WriteLine("IN --------- transfering to Terminal");
+
+                    var status = TransferEnergy(creep, room.Terminal);
+
+                    Console.WriteLine("OUT --------- transfering to Terminal");
+
+                    // status = TransferEnergy(creep, this.source1Flag);
+
+                    //if (status = 0)
+                    //{
+                    //    return;
+                    //}
+                }
+
+                //}
             }
         }
         private void TickSource2Miner(ICreep creep, ISource source)
@@ -2011,7 +2071,7 @@ namespace ScreepsDotNet.World
                 var container = Source2Container;
                 var harvestResults = HarvestEnergy(creep, source);
 
-                Console.WriteLine($" ----- harvestResults: {harvestResults}");
+                // Console.WriteLine($" ----- harvestResults: {harvestResults}");
                 if (harvestResults == CreepHarvestResult.NotInRange)
                 {
                     return;
@@ -2096,9 +2156,9 @@ namespace ScreepsDotNet.World
                         Console.WriteLine($" @@@@@@@@ site: {site}");
 
                         var buildStatus = creep.Build(site);
-                        Console.WriteLine($"Miner2 buildStatus: {buildStatus}");
-                        Console.WriteLine($"Miner2 buildStatus: {buildStatus}");
-                        Console.WriteLine($"Miner2 buildStatus: {buildStatus}");
+                      //  Console.WriteLine($"Miner2 buildStatus: {buildStatus}");
+                       // Console.WriteLine($"Miner2 buildStatus: {buildStatus}");
+                     //   Console.WriteLine($"Miner2 buildStatus: {buildStatus}");
 
                         return;
                     }
@@ -2113,8 +2173,6 @@ namespace ScreepsDotNet.World
 
                 if (spawn == null) { return; }
 
-
-                //constructionSites.Where
 
                 // if miner is next to spawn true, transfer 
                 if (Spawn2 != null)
@@ -2358,7 +2416,12 @@ namespace ScreepsDotNet.World
         }
         private void EnergyWithDrawHandler(ICreep creep,IStructureContainer container)
         {
-            
+            Console.WriteLine("START --------- EnergyWithDrawHandler()");
+            if (container == null)
+            {
+                Console.WriteLine("container is null. Exiting EnergyWithDrawHandler()");
+                return;
+            }
 
             if (container != null)
             {
@@ -2368,20 +2431,29 @@ namespace ScreepsDotNet.World
                     // var results = WithdrawEnergy(creep, this.Source1Container);
                     if (container.Store.GetUsedCapacity() > 0)
                     {
+                        Console.WriteLine(" 2417 IN --------- EnergyWithDrawHandler()");
+
                         if (WithdrawEnergy(creep, container) == CreepWithdrawResult.NotInRange)
                         { return; }
+
                     }
                 }
             }
 
             // find any container that creep is next to creep
+            Console.WriteLine(" 2427 IN --------- find any container that creep is next to creep");
             var otherContainers = containersInRoom.Where(x => x.RoomPosition.Position.IsNextTo(creep.RoomPosition.Position) && x.Store.GetUsedCapacity() > 0);
+            Console.WriteLine(" 2429 OUT --------- find any container that creep is next to creep");
+
             if (otherContainers != null && otherContainers.Count() > 0)
             {
+                Console.WriteLine($" 2433 --------- IsNextToContainer = otherContainers.First();  otherContainers.Count(): { otherContainers.Count()}");
+
                 var IsNextToContainer = otherContainers.First();
                 var results = WithdrawEnergy(creep, IsNextToContainer);
             }
 
+            Console.WriteLine(" EXIT --------- EnergyWithDrawHandler");
         }
         private CreepHarvestResult HarvestEnergy(ICreep creep, ISource source)
         {
