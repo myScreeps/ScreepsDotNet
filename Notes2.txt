@@ -1,3 +1,104 @@
 Notes
 
 dotnet install package ScreepsDotNet.Bundler -Version 1.1.0
+
+[12:59:23 AM]DOTNET  DEBUG:  xxx containersInRoom.Count: 2
+[12:59:23 AM]DOTNET  DEBUG:  xxx allRoomFlags.Count: 12
+[12:59:23 AM]DOTNET  DEBUG: Source1Container: StructureContainer[9f38b37702801a1]
+[12:59:23 AM]DOTNET  DEBUG: Source2Container: StructureContainer[1cd3b270229a480]
+[12:59:23 AM]DOTNET  DEBUG: targetMiner1Count: 1
+[12:59:23 AM]DOTNET  DEBUG: targetMiner2Count: 1
+[12:59:23 AM]DOTNET  DEBUG: targetTankerCount: 2
+[12:59:23 AM]DOTNET  DEBUG: respawnTick: 20
+[12:59:23 AM]DOTNET  DEBUG: maxTotalCreeps: 0
+[12:59:23 AM]DOTNET  DEBUG: exiting UpdatingSpawn1Memory
+[12:59:23 AM]DOTNET  DEBUG: this.UpdateSpawn1Memory() completed
+[12:59:23 AM]DOTNET  spawn: StructureSpawn['Spawn1']([33,28:W1N7])
+[12:59:23 AM]DOTNET  DEBUG: spawningManager.GetSpawnMemory() completed
+[12:59:23 AM]DOTNET  DEBUG: spawningManager.spawn: Spawn1
+[12:59:23 AM]DOTNET     miner1Count: 1
+[12:59:23 AM]DOTNET     miner2Count: 1
+[12:59:23 AM]DOTNET    builderCount: 2
+[12:59:23 AM]DOTNET     tankerCount: 2
+[12:59:23 AM]DOTNET     workerCount: 1
+[12:59:23 AM]DOTNET   repairerCount: 0
+[12:59:23 AM]DOTNET  MaxCreepsCount: 7
+[12:59:23 AM]DOTNET  DEBUG: if (creep.Store.GetFreeCapacity(ResourceType.Energy) > 0
+[12:59:23 AM]DOTNET  DEBUG: if (source1Link != null)
+[12:59:23 AM]DOTNET  DEBUG: --------- Transfering to Sourcelink1
+[12:59:23 AM]DOTNET  DEBUG: IN if (spawn.Store.GetFreeCapacity(ResourceType.Energy) >= 50)
+[12:59:23 AM]DOTNET  DEBUG: OUT if (spawn.Store.GetFreeCapacity(ResourceType.Energy) >= 50)
+[12:59:23 AM]DOTNET  DEBUG: --------- IN TransferEnergy(creep, this.Source1Container)
+[12:59:23 AM]DOTNET  DEBUG: --------- OUT TransferEnergy(creep, this.Source1Container)
+[12:59:23 AM]DOTNET  DEBUG: status: False
+[12:59:23 AM]DOTNET  DEBUG: pause: False
+[12:59:23 AM]DOTNET  DEBUG: status: False
+[12:59:23 AM]DOTNET  DEBUG: pause: False
+[12:59:23 AM]DOTNET  DEBUG: Start UpdateTowersEngeryStatus(10)
+[12:59:23 AM]DOTNET  DEBUG: completed UpdateTowersEngeryStatus(10)
+[12:59:23 AM]DOTNET  DEBUG: Start UpdateExentions(10)
+[12:59:23 AM]DOTNET  DEBUG: completed UpdateExentions(10)
+[12:59:23 AM]DOTNET  DEBUG: Start UpdateConstructionSites(10);
+[12:59:23 AM]DOTNET  DEBUG: completed UpdateConstructionSites(10);
+[12:59:23 AM]DOTNET  DEBUG: Start UpdateDamagedCreeps(1);
+[12:59:23 AM]DOTNET  DEBUG:    demagedCreepsInRoom.Count: 0
+[12:59:23 AM]DOTNET  DEBUG: completed UpdateDamagedCreeps(1);
+[12:59:23 AM]DOTNET  DEBUG: Start UpdateDamagedCreeps(10);
+[12:59:23 AM]DOTNET  DEBUG: structures that need be repaired: 0
+[12:59:23 AM]DOTNET  DEBUG: completed UpateRepartTargets(10);
+[12:59:23 AM]DOTNET   
+[12:59:23 AM]DOTNET          spawnQueue.Count.Count: 4
+[12:59:23 AM]DOTNET           AllCreepsInRoom.Count: 3
+[12:59:23 AM]DOTNET        minerCreepsSource1.Count: 1
+[12:59:23 AM]DOTNET        minerCreepsSource2.Count: 0
+[12:59:23 AM]DOTNET             builderCreeps.Count: 0
+[12:59:23 AM]DOTNET         constructionSites.Count: 0
+[12:59:23 AM]DOTNET            upgraderCreeps.Count: 1
+[12:59:23 AM]DOTNET             invaderCreeps.Count: 0
+[12:59:23 AM]DOTNET            repairerCreeps.Count: 0
+[12:59:23 AM]DOTNET              tankerCreeps.Count: 1
+[12:59:23 AM]DOTNET              towerTargets.Count: 0
+[12:59:23 AM]DOTNET              towersInRoom.Count: 6
+[12:59:23 AM]DOTNET             invaderCreeps.Count: 0
+[12:59:23 AM]DOTNET             repairTargets.Count: 0
+[12:59:23 AM]DOTNET            room.EnergyAvailable: 5300
+[12:59:23 AM]DOTNET   
+[12:59:23 AM]DOTNET  DEBUG: minerCreepsSource2.Count: 0
+[12:59:23 AM]DOTNET  DEBUG: Active Spawn is Spawn1
+[12:59:23 AM]DOTNET  DEBUG: right before if (spawnQueue.Count > 0)
+[12:59:23 AM]DOTNET  DEBUG: right after if (spawnQueue.Count > 0)
+[12:59:23 AM]DOTNET  DEBUG: var screepData = spawnQueue.Peek();
+[12:59:23 AM]DOTNET  DEBUG: var name = FindUniqueCreepName() is W1N7_1605321266
+[12:59:23 AM]DOTNET  DEBUG: role: miner2
+[12:59:23 AM]DOTNET  spawnName: Spawn1
+[12:59:23 AM]DOTNET  DEBUG: role is miner2
+[12:59:23 AM]DOTNET  DEBUG: right before spawning creep
+[12:59:23 AM]DOTNET  DEBUG: 1389 Active Spawn is Spawn2
+[12:59:23 AM]DOTNET  DEBUG: 1390 creepBodyType: BodyType(1x Move, 1x Carry, 7x Work)
+[12:59:23 AM]DOTNET  DEBUG: minerCreepsSource2.Count: 0
+[12:59:23 AM]DOTNET  DEBUG: Active Spawn is Spawn1
+[12:59:23 AM]DOTNET  DEBUG: right before if (spawnQueue.Count > 0)
+[12:59:23 AM]DOTNET  DEBUG: right after if (spawnQueue.Count > 0)
+[12:59:23 AM]DOTNET  DEBUG: var screepData = spawnQueue.Peek();
+[12:59:23 AM]DOTNET  DEBUG: var name = FindUniqueCreepName() is W1N7_431615797
+[12:59:23 AM]DOTNET  DEBUG: role: miner2
+[12:59:23 AM]DOTNET  spawnName: Spawn1
+[12:59:23 AM]DOTNET  DEBUG: role is miner2
+[12:59:23 AM]DOTNET  DEBUG: right before spawning creep
+[12:59:23 AM]DOTNET  DEBUG: 1389 Active Spawn is Spawn2
+[12:59:23 AM]DOTNET  DEBUG: 1390 creepBodyType: BodyType(1x Move, 1x Carry, 7x Work)
+[12:59:23 AM]DOTNET  DEBUG: minerCreepsSource2.Count: 0
+[12:59:23 AM]DOTNET  DEBUG: Active Spawn is Spawn1
+[12:59:23 AM]DOTNET  DEBUG: right before if (spawnQueue.Count > 0)
+[12:59:23 AM]DOTNET  DEBUG: right after if (spawnQueue.Count > 0)
+[12:59:23 AM]DOTNET  DEBUG: var screepData = spawnQueue.Peek();
+[12:59:23 AM]DOTNET  DEBUG: var name = FindUniqueCreepName() is W1N7_1380610312
+[12:59:23 AM]DOTNET  DEBUG: role: miner2
+[12:59:23 AM]DOTNET  spawnName: Spawn1
+[12:59:23 AM]DOTNET  DEBUG: role is miner2
+[12:59:23 AM]DOTNET  DEBUG: right before spawning creep
+[12:59:23 AM]DOTNET  DEBUG: 1389 Active Spawn is Spawn2
+[12:59:23 AM]DOTNET  DEBUG: 1390 creepBodyType: BodyType(1x Move, 1x Carry, 7x Work)
+[12:59:23 AM]DOTNET   
+[12:59:23 AM]DOTNET  ******************** !!!- The End of tick -!!! ********************
+[12:59:23 AM]DOTNET  PROFILE loop 8.1 ms

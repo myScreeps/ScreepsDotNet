@@ -36,4 +36,8 @@
 		<Content Include="Native\world.c" PackagePath="Native\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
 </Project>

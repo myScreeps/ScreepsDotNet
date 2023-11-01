@@ -29,6 +29,7 @@
 	<Import Project="..\ScreepsDotNet.API\build\ScreepsDotNet.API.props" />
 
 	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="ScreepsDotNet.Bundler" Version="1.1.0" PrivateAssets="All" />
 	</ItemGroup>
 

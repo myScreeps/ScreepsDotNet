@@ -1,0 +1,81 @@
+﻿ at System.Text.Json.ThrowHelper.ThrowNotSupportedException_ConstructorContainsNullParameterNames(Type )
+   at System.Text.Json.Serialization.Metadata.ReflectionJsonTypeInfo`1[[ScreepsDotNet.World.CheckSumExample, ScreepsDotNet, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]].GetParameterInfoValues()
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo.Configure()
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo.<EnsureConfigured>g__ConfigureLocked|143_0()
+--- End of stack trace from previous location ---
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo.<EnsureConfigured>g__ConfigureLocked|143_0()
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo.EnsureConfigured()
+   at System.Text.Json.JsonSerializerOptions.GetTypeInfoInternal(Type , Boolean , Boolean )
+   at System.Text.Json.JsonSerializer.ResolvePolymorphicTypeInfo[Object](Object& , JsonTypeInfo , Boolean& )
+   at System.Text.Json.JsonSerializer.WriteCore[Object](Utf8JsonWriter , Object& , JsonTypeInfo`1 )
+   at System.Text.Json.JsonSerializer.WriteString[Object](Object& , JsonTypeInfo`1 )
+   at System.Text.Json.JsonSerializer.Serialize[Object](Object , JsonSerializerOptions )
+   at ScreepsDotNet.World.ChecksumGenerator.ObjectToJsonString(Object )
+   at ScreepsDotNet.World.ChecksumGenerator.GenerateChecksum(Object )
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_1365837811(JSMarshalerArgument* __arguments_buffer)
+Error: The deserialization constructor for type 'ScreepsDotNet.World.CheckSumExample' contains parameters with null names. This might happen because the parameter names have been trimmed by the linker. Consider using the source generated serializer instead.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
+[2:29:11 AM]DOTNET   
+[2:29:11 AM]DOTNET  ******************** !!Start of Tick Test World!! ********************
+[2:29:11 AM]   at System.Text.Json.ThrowHelper.ThrowNotSupportedException_ConstructorContainsNullParameterNames(Type )
+   at System.Text.Json.Serialization.Metadata.ReflectionJsonTypeInfo`1[[ScreepsDotNet.World.CheckSumExample, ScreepsDotNet, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]].GetParameterInfoValues()
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo.Configure()
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo.<EnsureConfigured>g__ConfigureLocked|143_0()
+--- End of stack trace from previous location ---
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo.<EnsureConfigured>g__ConfigureLocked|143_0()
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo.EnsureConfigured()
+   at System.Text.Json.JsonSerializerOptions.GetTypeInfoInternal(Type , Boolean , Boolean )
+   at System.Text.Json.JsonSerializer.ResolvePolymorphicTypeInfo[Object](Object& , JsonTypeInfo , Boolean& )
+   at System.Text.Json.JsonSerializer.WriteCore[Object](Utf8JsonWriter , Object& , JsonTypeInfo`1 )
+   at System.Text.Json.JsonSerializer.WriteString[Object](Object& , JsonTypeInfo`1 )
+   at System.Text.Json.JsonSerializer.Serialize[Object](Object , JsonSerializerOptions )
+   at ScreepsDotNet.World.ChecksumGenerator.ObjectToJsonString(Object )
+   at ScreepsDotNet.World.ChecksumGenerator.GenerateChecksum(Object )
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_1365837811(JSMarshalerArgument* __arguments_buffer)
+Error: The deserialization constructor for type 'ScreepsDotNet.World.CheckSumExample' contains parameters with null names. This might happen because the parameter names have been trimmed by the linker. Consider using the source generated serializer instead.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
+
+
+
+    1:38:35 PM]DOTNET   
+[1:38:35 PM]DOTNET  ******************** !!Start of Tick Test World!! ********************
+[1:38:35 PM]   at System.Security.Cryptography.HashProviderDispenser.CreateHashProvider(String )
+   at System.Security.Cryptography.MD5.Implementation..ctor()
+   at System.Security.Cryptography.MD5.Create()
+   at ScreepsDotNet.World.ChecksumGenerator.CalculateMD5Hash(Object )
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_42417138(JSMarshalerArgument* __arguments_buffer)
+Error: 'MD5' is not a known hash algorithm.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
