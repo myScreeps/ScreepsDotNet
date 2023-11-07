@@ -22,7 +22,6 @@ using Color = ScreepsDotNet.API.Color;
 using System.Text.Json;
 using System.Diagnostics.CodeAnalysis;
 
-
 // W27S55 reached level 7 morning of Wed Sept 19th, 2023
 // N1W8 reached level 6 afternoon of Mon Oct 9th, 2023
 namespace ScreepsDotNet.World
@@ -101,7 +100,7 @@ namespace ScreepsDotNet.World
         private readonly ISet<IStructureSpawn> spawns = new HashSet<IStructureSpawn>();
         private readonly ISet<ISource> sources = new HashSet<ISource>();
         private readonly ISet<IConstructionSite> constructionSites = new HashSet<IConstructionSite>();
-        private readonly ISet<ICreep> demagedCreepsInRoom = new HashSet<ICreep>();      
+        private readonly ISet<ICreep> demagedCreepsInRoom = new HashSet<ICreep>();
         private readonly ISet<IStructure> repairTargets = new HashSet<IStructure>();
         private readonly ISet<IStructureExtension> extensionTargets = new HashSet<IStructureExtension>();
         //  private readonly ISet<IStructureTower> towersInRoom = new HashSet<IStructureTower>();
@@ -149,7 +148,7 @@ namespace ScreepsDotNet.World
 
         private int targetRepairerCount = 0;
         private int targetWorkerCount = 3;
-        
+
         // private int targetUpgraderCount1 = 0;
         // private int targetMinerCountTest = 0;
 
@@ -215,7 +214,7 @@ namespace ScreepsDotNet.World
         private bool hardReset = false;
         private bool enableSource1Link = true;
         private bool enableSource2Link = true;
-        private long tickTotalExecutionTime; 
+        private long tickTotalExecutionTime;
         private long disableEverything;
         private int maxTotalCreeps = 13;
         private bool pauseAllCreeps = false;
@@ -224,6 +223,14 @@ namespace ScreepsDotNet.World
         private int respawnTick = 20;
         private string creepsCrc;
         private bool spawnOnce = false;
+        private IEnumerable<IStructureWall> wallsToBeRepaired;
+       // private Point wallUpperXY = new Point(1, 1);
+        //private Point wallLowerXY = new Point(1, 1);
+
+        private int wallUpperX = 1;
+        private int wallLowerY = 1;
+
+        
 
         public RoomManager(IGame game, IRoom room)
         {
@@ -255,13 +262,24 @@ namespace ScreepsDotNet.World
 
         }
 
+
+        public IFlag GetFlagByName(String flagName)
+        {
+            var flags = allRoomFlags.Where(x => x.Name == flagName);
+            if (flags.Count() > 0)
+            {
+                return flags.First();
+            }
+            return null;
+        }
+
         public void Init()
         {
             CleanMemory();
             currentGameTick = game.Time;
             SyncScreepsGameObjects();
             roomVisual = game.CreateRoomVisual(this.room.Name);
-   
+
             GetRoomSpawns();
             GetRoomSources();
             this.Source1 = GetSource1();
@@ -281,7 +299,7 @@ namespace ScreepsDotNet.World
             // test stuff
             spw1 = game.Spawns.Values.ToArray()[0];
 
-            
+
 
 
 
@@ -396,7 +414,7 @@ namespace ScreepsDotNet.World
                     Spawn1.Memory.SetValue("targetWorkerCount", 2);
                 }
 
-                
+
 
                 if (!Spawn1.Memory.TryGetInt("targetTankerCount", out this.targetTankerCount))
                 {
@@ -432,7 +450,7 @@ namespace ScreepsDotNet.World
                 //roomMemory.SetValue("maxTotalCreeps", 5);
             }
 
-         
+
 
 
             this.UpdateSpawn1Memory();
@@ -485,7 +503,23 @@ namespace ScreepsDotNet.World
             //}
         }
 
+        private IEnumerable<IStructureWall> GetWallsToBeRepaired(IFlag WallPosition1, IFlag WallPosition2, int maxWallHits = 1000)
+        {
+            var wallsThatNeedRepair = GetWallsToBeRepaired(WallPosition1.RoomPosition, WallPosition2.RoomPosition, maxWallHits);
+            return wallsThatNeedRepair;
+        }
 
+
+        private IEnumerable<IStructureWall> GetWallsToBeRepaired(RoomPosition roomPosition1, RoomPosition roomPosition2, int maxWallHits = 1000)
+        {
+            var wallsThatNeedRepair = wallsInRoom.Where(x => x.Hits < maxWallHits && x.RoomPosition.Position.X >= roomPosition1.Position.X && x.RoomPosition.Position.Y <= roomPosition2.Position.Y);
+            foreach (var wall in wallsThatNeedRepair)
+            {
+                repairTargets.Add(wall);
+
+            }
+             return wallsThatNeedRepair;
+        }
 
         private void InitLinks()
         {
@@ -664,7 +698,9 @@ namespace ScreepsDotNet.World
 
 
 
-            //var wallsThatNeedRepair = wallsInRoom.Where(x => x.Hits < maxWallHits);
+
+            var wallsThatNeedRepair = wallsInRoom.Where(x => x.Hits < maxWallHits);
+
             //foreach (var wall in wallsThatNeedRepair)
             //{
             //    repairTargets.Add(wall);
@@ -1467,7 +1503,7 @@ namespace ScreepsDotNet.World
         /// <param name="spawn"></param>
         private void TickSpawn(IStructureSpawn spawn)
         {
-            myDebug.debug = true;
+           // myDebug.debug = true;
             spawn = Spawn1;
             this.maxTotalCreeps = spawningManager.MaxCreepsCount;
             //if (spawn.Exists == false || spawn == null)
@@ -1713,7 +1749,7 @@ namespace ScreepsDotNet.World
                 }
             }
             
-            myDebug.debug = false;
+           // myDebug.debug = false;
         }
 
         private void testSpawn()
@@ -1775,8 +1811,6 @@ namespace ScreepsDotNet.World
             Console.WriteLine($"{this}: {creep} died");
             //
         }
-
- 
 
         private void MoveToContainer(ICreep creep, IStructureContainer container) 
         {
@@ -1919,6 +1953,7 @@ namespace ScreepsDotNet.World
         {
 
             Console.WriteLine($" xxx allRoomFlags.Count: {allRoomFlags.Count}");
+
             //foreach (var xflag in allRoomFlags)
             //{
 
@@ -1927,8 +1962,17 @@ namespace ScreepsDotNet.World
             //   var flags = allRoomFlags.ToHashSet();
             //   Console.WriteLine($" xxx flags.Count: {allRoomFlags.Count}");
 
-            var flag = allRoomFlags.Where(x => x.Name == FlagName).First();
-            //Console.WriteLine($" xxx Flag.Name: {flag.Name}"); 
+            IFlag flag; 
+            try
+            {
+                flag = allRoomFlags.Where(x => x.Name == FlagName).First();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        
+            Console.WriteLine($" xxx Flag.Name: {flag.Name}"); 
             if (flag == null)
             {
                 return null;
@@ -1955,22 +1999,22 @@ namespace ScreepsDotNet.World
                 return null;
             }
 
-            container = this.containersInRoom.Where(x => x.RoomPosition.Position.Equals(flag.RoomPosition.Position)).First();
+        //    container = this.containersInRoom.Where(x => x.RoomPosition.Position.Equals(flag.RoomPosition.Position)).First();
 
 
-            //try
-            //{
-            //    if (containersInRoom.Count > 0)
-            //    {
-            //        container = this.containersInRoom.Where(x => x.RoomPosition.Position.Equals(flag.RoomPosition.Position)).First();
-            //    }
+            try
+            {
+                if (containersInRoom.Count > 0)
+                {
+                    container = this.containersInRoom.Where(x => x.RoomPosition.Position.Equals(flag.RoomPosition.Position)).First();
+                }
 
-            //}
-            //catch (Exception)
-            //{
-            //    return null;
-            //}
-          
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
             myDebug.WriteLine($" xxx container: {container}");
             Console.WriteLine($" xxx container: {container}");
             //if (container == null)
@@ -2708,19 +2752,24 @@ namespace ScreepsDotNet.World
                 }
                 else if (withdrawResult != CreepWithdrawResult.Ok)
                 {
-                    //  Console.WriteLine($"{this}: {creep} unexpected result when withdrawing from {room.Storage} ({withdrawResult})");
+                      Console.WriteLine($"{this}: {creep} unexpected result when withdrawing from {room.Storage} ({withdrawResult})");
                 }
             }
             else
             {
-                withdrawResult = creep.Withdraw(spawn, ResourceType.Energy);
-                if (withdrawResult == CreepWithdrawResult.NotInRange)
+                if (spawnQueue.Count == 0)
                 {
-                    creep.MoveTo(spawn.RoomPosition);
-                }
-                else if (withdrawResult != CreepWithdrawResult.Ok)
-                {
-                    //  Console.WriteLine($"{this}: {creep} unexpected result when withdrawing from {spawn} ({withdrawResult})");
+
+                
+                    withdrawResult = creep.Withdraw(spawn, ResourceType.Energy);
+                    if (withdrawResult == CreepWithdrawResult.NotInRange)
+                    {
+                        creep.MoveTo(spawn.RoomPosition);
+                    }
+                    else if (withdrawResult != CreepWithdrawResult.Ok)
+                    {
+                        //  Console.WriteLine($"{this}: {creep} unexpected result when withdrawing from {spawn} ({withdrawResult})");
+                    }
                 }
             }
         }
@@ -2992,6 +3041,28 @@ namespace ScreepsDotNet.World
                     //}
                     //this.targetRepairerCount = _targetRepairerCount;
                 }
+
+                //success = spawn.Memory.TryGetInt("wallUpperX", out var _wallUpperX);
+                //if (success)
+                //{
+                //    if (this.wallUpperX != _wallUpperX)
+                //    {
+                //        HasChanged = true;
+                //        this.wallUpperX = _wallUpperX;
+                //    }
+                //}
+
+
+
+                //success = spawn.Memory.TryGetInt("wallLowerY", out var _wallLowerY);
+                //if (success)
+                //{
+                //    if (this.wallLowerY != _wallLowerY)
+                //    {
+                //        HasChanged = true;
+                //        this.wallLowerY = _wallLowerY;
+                //    }
+                //}
 
                 //spawn.Memory.SetValue("targetBuilderCount", builderCount);
                 //spawn.Memory.SetValue("targetWorkerCount", workerCount);

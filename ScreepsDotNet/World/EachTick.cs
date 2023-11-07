@@ -30,17 +30,30 @@ namespace ScreepsDotNet.World
         [RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, JsonSerializerOptions)")]
         public void Tick()
         {
+            //  StackFrame stackFrame = new StackFrame(0);
             stopwatch.Reset();
             stopwatch.Start();
             Console.WriteLine(" ");
-            Console.WriteLine("******************** !!Start of Tick Test World!! ********************");
+            Console.WriteLine("******************** !!!Start of Tick Test World!!! ********************");
 
             currentGameTick = game.Time;
             myDebug.debug = this.debug;
             // myDebug.debug = true;
-            
 
-            testSpawn();
+
+            // testSpawn();
+
+
+         //   var wallFlag1 = GetFlagByName("WallTarget_1_W1N8");
+         //   var wallFlag2 = GetFlagByName("WallTarget_2_W1N8");
+
+            //var walls = GetWallsToBeRepaired(wallFlag1, wallFlag2);
+            //foreach (var wall in walls)
+            //{
+            //    Console.WriteLine($"wall.LocalPosition: {wall.LocalPosition}");
+            //}
+
+
 
 
             // Exit here so everything else is disabled.
@@ -83,7 +96,10 @@ namespace ScreepsDotNet.World
             // Console.WriteLine($"jsonString: {jsonString}");
             //var cksum = ChecksumGenerator.ObjectToByteArray(data);
             //Console.WriteLine($"cksum: {cksum}");
-            Console.WriteLine($"end");
+            Console.WriteLine($"line 86");
+
+            //            int lineNumber = stackFrame.GetFileLineNumber();
+            //  Console.WriteLine($"line {stackFrame.GetFileLineNumber()}");
 
 
             //Spawn1.Memory.TryGetInt("targetMiner1Count",out targetMiner1Count);
@@ -167,6 +183,7 @@ namespace ScreepsDotNet.World
             //  Console.WriteLine($"isInDanger: {isInDanger}");
             //InitLinks();
 
+            Console.WriteLine($"line 174");
 
 
             myDebug.WriteLine($"maxTotalCreeps: {maxTotalCreeps}");
@@ -667,11 +684,11 @@ namespace ScreepsDotNet.World
                 //}
             }
         }
-      
+
         private void TickSource2Miner(ICreep creep, ISource source)
         {
-            myDebug.debug = true;
-            Console.WriteLine("Enter TickSource2Miner");
+          //  myDebug.debug = true;
+           // Console.WriteLine("Enter TickSource2Miner");
             if (!creep.Exists)
             {
                 return;
@@ -717,7 +734,7 @@ namespace ScreepsDotNet.World
 
                 if (harvestResults != CreepHarvestResult.Ok)
                 {
-                  //  myDebug.WriteLine("line 2099");
+                    //  myDebug.WriteLine("line 2099");
 
 
                     if (this.Source2Container != null)
@@ -759,44 +776,57 @@ namespace ScreepsDotNet.World
             }
             else
             {
+                //////////////////////////////////////////////
                 // *** Full, do something with energy ***
-
+                //////////////////////////////////////////////
+               
                 myDebug.WriteLine($" *** Full, do something with energy ***");
                 /// if there a construction site next to miner2, then build it
-                var sites = constructionSites.Where(x => x.RoomPosition.Position.IsNextTo(creep.RoomPosition.Position));
+               // var sites = constructionSites.Where(x => x.RoomPosition.Position.IsNextTo(creep.RoomPosition.Position));
                 //if (sites != null && sites.Count() > 0)
                 //{
                 //    Console.WriteLine($" @@@@@@@@ constructionSites.Count: {constructionSites.Count}");
                 //    Console.WriteLine($" @@@@@@@@ sites.Count(): {sites.Count()}");
 
 
-                //    var site = sites.First();
-                //    if (site != null)
+                // TickBuilder(creep);
+                //return;
+                ////var site = sites.First();
+                //foreach (var site in sites)
+                //{
+                //    if (site.RoomPosition.Position.IsNextTo(creep.RoomPosition.Position))
                 //    {
-                //        Console.WriteLine($" @@@@@@@@ site: {site}");
-
-                //        var buildStatus = creep.Build(site);
-                //        //  Console.WriteLine($"Miner2 buildStatus: {buildStatus}");
-                //        // Console.WriteLine($"Miner2 buildStatus: {buildStatus}");
-                //        //   Console.WriteLine($"Miner2 buildStatus: {buildStatus}");
-
+                //        var buildStatus =  creep.Build(site);
                 //        return;
                 //    }
-
                 //}
 
+                //if (site != null)
+                //{
+                //    Console.WriteLine($" @@@@@@@@ site: {site}");
 
-            //    if (!spawns.Any()) { return; }
+                //    var buildStatus = creep.Build(site);
+                //    //  Console.WriteLine($"Miner2 buildStatus: {buildStatus}");
+                //    // Console.WriteLine($"Miner2 buildStatus: {buildStatus}");
+                //    //   Console.WriteLine($"Miner2 buildStatus: {buildStatus}");
+
+                //    return;
+                //}
+
+                //   }
+
+
+                //    if (!spawns.Any()) { return; }
                 var spawn = spawns.Best(x => -x.LocalPosition.LinearDistanceTo(creep.LocalPosition));
                 //var source2Flag = room.Find<IFlag>().Where(x => x.Name == "")
-                myDebug.WriteLine(" *** if (!spawns.Any()) { return; }");
+              // myDebug.WriteLine(" *** if (!spawns.Any()) { return; }");
 
-              //  if (spawn == null) { return; }
-
-          
+                //  if (spawn == null) { return; }
 
 
-                Console.WriteLine($"this.Spawn2 is: {this.Spawn2}");
+
+
+                // Console.WriteLine($"this.Spawn2 is: {this.Spawn2}");
                 // if miner is next to spawn true, transfer 
                 if (this.Spawn2 != null)
                 {
@@ -812,6 +842,16 @@ namespace ScreepsDotNet.World
                         }
                     }
                 }
+
+                //if (source2Link != null)
+                //{
+                //    Console.WriteLine($"------ source2Link.Store.GetFreeCapacity(ResourceType.Energy): {source2Link.Store.GetFreeCapacity(ResourceType.Energy)}");
+                //}
+                //else
+                //{
+                //    Console.WriteLine("-------- source2Link is null");
+                //}
+
 
                 if (source2Link != null && source2Link.Store.GetFreeCapacity(ResourceType.Energy) > 0)
                 {
@@ -972,7 +1012,7 @@ namespace ScreepsDotNet.World
             //    return;
             //}
 
-            ///////////////////////////////////////////////
+            /////////////////////////////////////////////////
             // Transfer from Source2 Link to controller link
             if (this.controllerLink != null && this.source2Link != null && enableSource2Link == true)
             {
@@ -1393,6 +1433,9 @@ namespace ScreepsDotNet.World
 
         private void TickTowers(IStructureTower tower)
         {
+            
+
+
             foreach (ICreep invader in invaderCreeps)
             {
                 tower.Attack(invader);
@@ -1407,6 +1450,20 @@ namespace ScreepsDotNet.World
                     tower.Heal(creep);
                     return;
                 }
+            }
+
+            if (repairTargets.Count ==0)
+            {
+
+                var wallFlag1 = GetFlagByName("WallTarget_1_W1N8");
+                var wallFlag2 = GetFlagByName("WallTarget_2_W1N8");
+
+                 GetWallsToBeRepaired(wallFlag1, wallFlag2,10000);
+                //foreach (var wall in walls)
+                //{
+                //    Console.WriteLine($"wall.LocalPosition: {wall.LocalPosition}");
+                //}
+
             }
 
 

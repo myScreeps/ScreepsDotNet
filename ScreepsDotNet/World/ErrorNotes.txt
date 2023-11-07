@@ -79,3 +79,121 @@ Error: 'MD5' is not a known hash algorithm.
     at __mainLoop:1:52
     at __mainLoop:2:3
     at Object.evalCode (<runtime>:15370:76)
+
+
+    12:09:10 PM]DOTNET   
+[12:09:10 PM]DOTNET  ******************** !!!Start of Tick Test World!!! ********************
+[12:09:10 PM]DOTNET  spawningManager is null: 
+[12:09:10 PM]DOTNET  line 86
+[12:09:10 PM]DOTNET  line 0
+[12:09:10 PM]DOTNET  DEBUG: maxTotalCreeps: 13
+[12:09:10 PM]DOTNET  DEBUG: Source1: Source[[4,35:W1N8]]
+[12:09:10 PM]DOTNET  DEBUG: Source2: Source[[40,43:W1N8]]
+[12:09:10 PM]DOTNET  DEBUG: source2Link: 
+[12:09:10 PM]DOTNET  DEBUG: controllerLink: 
+[12:09:10 PM]DOTNET  DEBUG:  xxx containersInRoom.Count: 1
+[12:09:10 PM]DOTNET  DEBUG:  xxx allRoomFlags.Count: 5
+[12:09:10 PM]DOTNET  DEBUG: Source1Container is null: 
+[12:09:10 PM]DOTNET  DEBUG: Source1Container: StructureContainer[5df5a0abf610ce1]
+[12:09:10 PM]DOTNET  DEBUG: Source2Container: 
+[12:09:10 PM]DOTNET  DEBUG: targetMiner1Count: 3
+[12:09:10 PM]DOTNET  DEBUG: targetMiner2Count: 5
+[12:09:10 PM]DOTNET  DEBUG: targetTankerCount: 0
+[12:09:10 PM]DOTNET  DEBUG: respawnTick: 20
+[12:09:10 PM]DOTNET  DEBUG: maxTotalCreeps: 20
+[12:09:10 PM]DOTNET  DEBUG: exiting UpdatingSpawn1Memory
+[12:09:10 PM]DOTNET  DEBUG: this.UpdateSpawn1Memory() completed
+[12:09:10 PM]   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_1499935391(JSMarshalerArgument* __arguments_buffer)
+Error: Object reference not set to an instance of an object.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
+   at ScreepsDotNet.World.RoomManager.Tick()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_1499935391(JSMarshalerArgument* __arguments_buffer)
+Error: Object reference not set to an instance of an object.
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
+[12:20:25 PM]#5024097: INIT state refreshed, beginning init sequence
+[12:20:25 PM]#5024097 INIT: loaded js dependencies (57.31161300000001ms)
+[12:20:25 PM]DOTNET  loaded 8 items from the manifest, totalling 2600 KiB of data
+[12:20:25 PM]DOTNET  PROFILE decodeManifest 29 ms
+[12:20:25 PM]DOTNET  PROFILE decodeManifest (b64) 28.8 ms
+[12:20:25 PM]DOTNET  PROFILE decodeManifest (inflate) 0 ms
+[12:20:25 PM]DOTNET  DEBUG:  creating dotnet runtime...
+[12:20:25 PM]DOTNET  PROFILE preRun 43.3 ms
+[12:20:25 PM]#5024097 INIT: created dotnet instance (74.94762799999998ms)
+[12:20:25 PM]DOTNET  DEBUG:  mono_wasm_runtime_ready fe00e07a-5519-4dfe-b35a-f867dbaf2e28
+[12:20:25 PM]DOTNET  PROFILE onRuntimeInitialized 27.3 ms
+[12:20:25 PM]DOTNET  PROFILE onDotnetReady 0.1 ms
+[12:20:25 PM]DOTNET  DEBUG:  setting up dotnet runtime...
+[12:20:25 PM]DOTNET  PROFILE setModuleImports 0 ms
+[12:20:25 PM]DOTNET  DEBUG:  exports: ScreepsDotNet
+[12:20:25 PM]DOTNET  PROFILE getAssemblyExports 7.1 ms
+[12:20:25 PM]DOTNET  Cleared 3 dead creeps from memory
+[12:20:25 PM]DOTNET  PROFILE runMain 33.7 ms
+[12:20:25 PM]DOTNET  PROFILE loop 66.7 ms
+[12:20:25 PM]#5024099: INIT SUCCESS (499.908511ms remaining cpu this tick)
+[12:20:25 PM]DOTNET  Failed to retrieve constructor for 'StructureFactory'
+[12:20:25 PM]DOTNET  Failed to retrieve constructor for 'StructureInvaderCore'
+[12:20:25 PM]DOTNET  Failed to retrieve constructor for 'StructureKeeperLair'
+[12:20:25 PM]DOTNET  Failed to retrieve constructor for 'StructureLab'
+[12:20:25 PM]DOTNET  Failed to retrieve constructor for 'StructureNuker'
+[12:20:25 PM]DOTNET  Failed to retrieve constructor for 'StructureObserver'
+[12:20:25 PM]DOTNET  Failed to retrieve constructor for 'StructurePowerBank'
+[12:20:25 PM]DOTNET  Failed to retrieve constructor for 'StructurePowerSpawn'
+[12:20:25 PM]DOTNET  Failed to retrieve constructor for 'StructurePortal'
+[12:20:25 PM]DOTNET  Failed to retrieve constructor for 'Deposit'
+[12:20:25 PM]DOTNET  Failed to retrieve constructor for 'Nuke'
+[12:20:25 PM]DOTNET  Failed to retrieve constructor for 'Ruin'
+[12:20:25 PM]DOTNET  Adding room manager for Room['W1N8'] as it is now visible and controlled by us
+[12:20:25 PM]DOTNET   xxx allRoomFlags.Count: 5
+[12:20:25 PM]DOTNET   xxx container: StructureContainer[5df5a0abf610ce1]
+[12:20:25 PM]DOTNET   xxx allRoomFlags.Count: 5
+[12:20:25 PM]   at System.Linq.ThrowHelper.ThrowNoElementsException()
+   at System.Linq.Enumerable.First[IStructureContainer](IEnumerable`1 )
+   at ScreepsDotNet.World.RoomManager.GetContainer(IFlag )
+   at ScreepsDotNet.World.RoomManager.GetContainer(String )
+   at ScreepsDotNet.World.RoomManager.GetSource2Container()
+   at ScreepsDotNet.World.RoomManager.Init()
+   at ScreepsDotNet.World.BasicExample.Loop()
+   at ScreepsDotNet.Program.Loop()
+   at ScreepsDotNet.Program.__Wrapper_Loop_1499935391(JSMarshalerArgument* __arguments_buffer)
+Error: Sequence contains no elements
+    at jo (bootloader:6231:15)
+    at Ws (bootloader:6707:17)
+    at Object._bound_cs_ScreepsDotNet_Program_Loop (https://dotnet.generated.invalid/_bound_cs_ScreepsDotNet_Program_Loop:7:3)
+    at main:343:65
+    at DotNet.loop (bootloader:13310:13)
+    at Object.loop (main:343:16)
+    at __mainLoop:1:52
+    at __mainLoop:2:3
+    at Object.evalCode (<runtime>:15370:76)
+[12:20:26 PM]DOTNET   
+[12:20:26 PM]DOTNET  ******************** !!!Start of Tick Test World!!! ********************
+[12:20:26 PM]DOTNET  spawningManager is null: 
+[12:20:26 PM]DOTNET  line 86
+[12:20:26 PM]DOTNET  line 0
+[12:20:26 PM]DOTNET  DEBUG: maxTotalCreeps: 13
+[12:20:26 PM]DOTNET  DEBUG: Source1: Source[[4,35:W1N8]]
+[12:20:26 PM]DOTNET  DEBUG: Source2: Source[[40,43:W1N8]]
+[12:20:26 PM]DOTNET  DEBUG: source2Link: 
+[12:20:26 PM]DOTNET  DEBUG: controllerLink: 
+[12:20:26 PM]DOTNET  DEBUG:  xxx containersInRoom.Count: 1
